@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+        attribute vec4 vPosition; 
+		attribute vec4 vColor; 
+		varying vec4 fragColor; 
+		void main() 
+		{ 
+			gl_Position = vPosition; 
+			gl_PointSize = 2.5; 
+			fragColor = vColor; 
+		}
+    </script>
+
+    <script id="fragment-shader" type="x-shader/x-fragment">
+        precision mediump float; 
+		varying vec4 fragColor; 
+		void main() { gl_FragColor = fragColor; }
+    </script>
+
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
+    <script type="text/javascript" src="terrain.js"></script>
+</head>
+<h1 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h1>
+<body style="background-color:white; width: auto; height:auto;">
+    <canvas id="gl-canvas" width=1344px height="810px" >
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+
+
+</body>
+
+</html>
