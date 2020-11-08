@@ -1,27 +1,10 @@
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
 
-
-function WebGLSetup(){
-    canvas = document.getElementById("gl-canvas")
-    gl = WebGLUtils.setupWebGL(canvas)
-    if (!gl) { alert("WebGL isn't available") }
-    //  Configure WebGL
-    gl.viewport(0, 0, canvas.width, canvas.height)
-    gl.clearColor(0,0,0,1)
-    gl.enable(gl.DEPTH_TEST);
-    //  Load shaders and initialize attribute buffers
-    gl.clear(gl.COLOR_BUFFER_BIT)
-    program = initShaders(gl, "vertex-shader", "fragment-shader")
-    gl.useProgram(program)
-}
-
-
 function BufferFaces(elements){    
     iBuffer = gl.createBuffer() // Index / face buffer
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer)
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(elements), gl.STATIC_DRAW)    
 }
-
 
 function BufferVertices(vertices){
 
@@ -32,36 +15,30 @@ function BufferVertices(vertices){
     vPosition = gl.getAttribLocation(program, "vPosition")
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0)
     gl.enableVertexAttribArray(vPosition)
-
-    // cBuffer = gl.createBuffer();
-    // gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
-    // gl.bufferData(gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW);
-    
-    // vColor = gl.getAttribLocation(program, "vColor");
-    // gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
-    // gl.enableVertexAttribArray(vColor);
-    
 }
 
+function PerlinGen(freq, time){
+    let noise = new Perlin(freq)
+    var values = []
+    for (i = 0; i< time; i++){
+        values.push(noise.valueAt(i))
+    }
 
-function getHeight(x, z)
-{
-    return 0.0
+    return values
 }
-
 
 function getPatchVert(xmin, xmax, zmin, zmax){
 
+    var values = PerlinGen(15, 200)
     var terrainVerts = []
     var step = 0.1
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
         {
-            var y = getHeight(x, z)
+            var y = values[x]
             terrainVerts.push(vec3(x, y, z))
         }
     }
-    
     rowLength = Math.floor((xmax - xmin) / step) + 1
     
     return terrainVerts
@@ -120,16 +97,13 @@ function getPatchFaces()
     
 }
 
-
-window.onload = function init() {
-    WebGLSetup()
-    mode = 1
-    terrainVerts = getPatchVert(-0.8, 0.8, -0.8, 0.8)
+function get_patch(xmin, xmax, zmin, zmax){
+    terrainVerts = getPatchVert(xmin, xmax, zmin, zmax);
     terrainFaces = getPatchFaces()
-    BufferVertices(terrainVerts)
-    BufferFaces(terrainFaces)
-    render()
+
+    return [terrainVerts, terrainFaces]
 }
+
 
 
 function render()
