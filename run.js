@@ -1,3 +1,7 @@
+var modelViewMatrix, modelViewMatrixLoc
+var projectionMatrix, projectionMatrixLoc
+var eye, at, up
+
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
     gl = WebGLUtils.setupWebGL(canvas)
@@ -16,11 +20,22 @@ function WebGLSetup(){
 window.onload = function init() {
     WebGLSetup()
     mode = 1
-    get_patch(-0.8, 0.8, -0.8, 0.8)
+    get_patch(-2.0, 2.0, -2.0, 2.0)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
-    console.log("Terrain vertices", terrainVerts.slice(0, 10))
-    console.log("Perlin values: ", PerlinGen(15, 10))
+    
+    modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
+    projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
+    
+    eye = vec3(0, 2, 2)
+    at = vec3(0, 0, 0)
+    up = vec3(0, 0, 1)
+    modelViewMatrix = lookAt(eye, at, up)
+    projectionMatrix = perspective(60, 1, -2, 2)
+
+    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
+    gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
+    
     render()
 }
 

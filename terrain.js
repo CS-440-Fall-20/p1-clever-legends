@@ -31,11 +31,11 @@ function getPatchVert(xmin, xmax, zmin, zmax){
 
     var values = PerlinGen(15, 200)
     var terrainVerts = []
-    var step = 0.1
+    var step = 0.2
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
         {
-            var y = values[x]
+            var y = Math.random() * 0.5 - 0.25
             terrainVerts.push(vec3(x, y, z))
         }
     }

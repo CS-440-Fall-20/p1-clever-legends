@@ -3,11 +3,14 @@
 
 <head>
     <script id="vertex-shader" type="x-shader/x-vertex">
-        attribute vec3 vPosition; 
-		varying vec4 fragColor; 
-		void main() 
+        attribute vec3 vPosition;
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;        
+		varying vec4 fragColor;
+		void main()
 		{
-			gl_Position = vec4(vPosition.xzy, 1.0); 
+            vec4 pos = modelViewMatrix * vec4(vPosition.xyz, 1.0);
+            gl_Position = vec4(pos.x / pos.z, pos.y / pos.z, pos.z / 100.0, 1.0) ;
 			gl_PointSize = 2.5;
 			fragColor = vec4(1,1,1,1);
 		}
@@ -31,7 +34,7 @@
 </head>
 <h1 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h1>
 <body style="background-color:white; width: auto; height:auto;">
-    <canvas id="gl-canvas" width="1000px" height="1000px">
+    <canvas id="gl-canvas" width="500px" height="500px">
     Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
 
