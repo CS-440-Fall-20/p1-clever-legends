@@ -21,27 +21,15 @@ function BufferVertices(vertices){
 }
 
 
-function PerlinGen(freq, time){
-    // let noise = new Perlin(freq)
-    // var values = []
-    // for (i = 0; i< time; i++){
-        // values.push(noise.valueAt(i))
-    // }
-
-    // return values
-}
-
-
 function getHeight(x, z)
 {
 	return noise.perlin2(x / 3, z / 3) * 2
-	// return Math.random() * 0.5 - 0.25
+
 }
 
 
 function getPatchVert(xmin, xmax, zmin, zmax){
 
-    var values = PerlinGen(15, 200)
     var terrainVerts = []
     var step = 0.2
     for (var z = zmin; z <= zmax; z+=step){

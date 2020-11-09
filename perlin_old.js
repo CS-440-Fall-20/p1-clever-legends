@@ -57,5 +57,14 @@ class Perlin{
 
 }
 
+function PerlinGen(freq, time){
+    let noise = new Perlin(freq)
+    var values = []
+    for (i = 0; i< time; i++){
+        values.push(noise.valueAt(i))
+    }
+
+    return values
+}
 // Source: https://github.com/Supreme-Sector/Python-Perlin-Noise
 // This code has been copied and changed to JS from the cited github repository

@@ -17,6 +17,7 @@ function WebGLSetup(){
 }
 
 
+
 window.onload = function init() {
     WebGLSetup()
     mode = 1
@@ -37,5 +38,6 @@ window.onload = function init() {
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
     
     render()
+
 }
 
