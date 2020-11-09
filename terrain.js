@@ -1,5 +1,8 @@
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
 
+noise.seed(Math.random())
+
+
 function BufferFaces(elements){    
     iBuffer = gl.createBuffer() // Index / face buffer
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer)
@@ -17,15 +20,24 @@ function BufferVertices(vertices){
     gl.enableVertexAttribArray(vPosition)
 }
 
-function PerlinGen(freq, time){
-    let noise = new Perlin(freq)
-    var values = []
-    for (i = 0; i< time; i++){
-        values.push(noise.valueAt(i))
-    }
 
-    return values
+function PerlinGen(freq, time){
+    // let noise = new Perlin(freq)
+    // var values = []
+    // for (i = 0; i< time; i++){
+        // values.push(noise.valueAt(i))
+    // }
+
+    // return values
 }
+
+
+function getHeight(x, z)
+{
+	return noise.perlin2(x, z)
+	return Math.random() * 0.5 - 0.25
+}
+
 
 function getPatchVert(xmin, xmax, zmin, zmax){
 
@@ -35,7 +47,7 @@ function getPatchVert(xmin, xmax, zmin, zmax){
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
         {
-            var y = Math.random() * 0.5 - 0.25
+            var y = getHeight(x, z)
             terrainVerts.push(vec3(x, y, z))
         }
     }
@@ -97,10 +109,11 @@ function getPatchFaces()
     
 }
 
+
+
 function get_patch(xmin, xmax, zmin, zmax){
     terrainVerts = getPatchVert(xmin, xmax, zmin, zmax);
     terrainFaces = getPatchFaces()
-
     return [terrainVerts, terrainFaces]
 }
 
