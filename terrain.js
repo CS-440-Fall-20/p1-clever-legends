@@ -35,7 +35,7 @@ function PerlinGen(freq, time){
 function getHeight(x, z)
 {
 	return noise.perlin2(x / 3, z / 3) * 2
-	return Math.random() * 0.5 - 0.25
+	// return Math.random() * 0.5 - 0.25
 }
 
 
