@@ -10,7 +10,16 @@
 		void main()
 		{
             vec4 pos = modelViewMatrix * vec4(vPosition.xyz, 1.0);
-            gl_Position = vec4(pos.x / pos.z, pos.y / pos.z, pos.z / 100.0, 1.0) ;
+			vec4 pos2 = vec4(pos.xy / pos.z, pos.z, 1.0);
+			if(pos2.z > 0.0)
+			{
+				pos2.z = -1000000000.0;
+			}
+			else
+			{
+				pos2.z = pos2.z / 1000.0;
+			}
+            gl_Position = pos2;
 			gl_PointSize = 2.5;
 			fragColor = vec4(1,1,1,1);
 		}

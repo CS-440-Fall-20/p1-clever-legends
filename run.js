@@ -20,16 +20,16 @@ function WebGLSetup(){
 window.onload = function init() {
     WebGLSetup()
     mode = 1
-    get_patch(-2.0, 2.0, -2.0, 2.0)
+    get_patch(-20, 20, -20, 20)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
     
-    eye = vec3(0, 2, 2)
-    at = vec3(0, 0, 0)
-    up = vec3(0, 0, 1)
+    eye = vec3(0, 3, 3)
+    at = vec3(0, 3, 2)
+    up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)
     projectionMatrix = perspective(60, 1, -2, 2)
 
