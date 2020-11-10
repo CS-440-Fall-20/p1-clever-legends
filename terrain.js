@@ -24,7 +24,6 @@ function BufferVertices(vertices){
 function getHeight(x, z)
 {
 	return noise.perlin2(x / 3, z / 3) * 2
-
 }
 
 

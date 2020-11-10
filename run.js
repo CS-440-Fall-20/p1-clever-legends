@@ -133,6 +133,8 @@ function render()
     {
         gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
     }
+    
+    window.requestAnimationFrame(updateScene)
 }
 
 
