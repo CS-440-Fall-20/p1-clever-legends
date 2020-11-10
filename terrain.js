@@ -109,24 +109,27 @@ function get_patch(xmin, xmax, zmin, zmax){
 
 function updateScene()
 {
-    var speed = 0.00
+    var speed = 0.02
     var speedRot = 1
 
-    var rotMat1 = rotateY(rotatingLeft * speedRot)
-    var rotMat2 = rotateX(rotatingUp * speedRot)
-    var rotMatF = mult(rotMat1, rotMat2)
-    
-    var rotMat4 = rotateZ(rotatingSwirl * speedRot)
-        
-    // var tempUp = vec4(up, 0.0)
-    // tempUp = rotMat2
-    
     var diff = vec4(subtract(at, eye), 0.0)
-    var diff2 = mult(rotMatF, diff).slice(0, 3)
-    at = add(eye, diff2)
 
-    eye = add(eye, scale(speed, diff2))
-    at = add(at, scale(speed, diff2))
+    var rotMat1 = rotate(rotatingLeft * speedRot, up)
+    diff = mult(rotMat1, diff)
+
+    var perp = cross(diff.slice(0,3), up)
+    var rotMat2 = rotate(rotatingUp * speedRot, perp)
+    
+    diff = mult(rotMat2, diff).slice(0,3)
+    up = mult(rotMat2, vec4(up, 0.0))
+    
+    var rotMat3 = rotate(rotatingSwirl * speedRot, diff)
+    up = mult(rotMat3, up).slice(0,3)
+        
+    at = add(eye, diff)
+
+    eye = add(eye, scale(speed, diff))
+    at = add(at, scale(speed, diff))
 
     // if(rotatingUp != 0)
     // {

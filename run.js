@@ -13,42 +13,42 @@ function handleKeyDown(event)
     {
         if(rotatingUp == 0)
         {
-            rotatingUp = 1
+            rotatingUp = -1
         }
     }
     else if(event.keyCode == 83) //s
     {
         if(rotatingUp == 0)
         {
-            rotatingUp = -1
+            rotatingUp = 1
         }
     }
     else if(event.keyCode == 81) //q
     {
         if(rotatingSwirl == 0)
         {
-            rotatingSwirl = 1
+            rotatingSwirl = -1
         }
     }
     else if(event.keyCode == 69) //e
     {
         if(rotatingSwirl == 0)
         {
-            rotatingSwirl = -1
+            rotatingSwirl = 1
         }
     }
     else if(event.keyCode == 65) //a
     {
         if(rotatingLeft == 0)
         {
-            rotatingLeft = 1
+            rotatingLeft = -1
         }
     }
     else if(event.keyCode == 68) //d
     {
         if(rotatingLeft == 0)
         {
-            rotatingLeft = -1
+            rotatingLeft = 1
         }
     }
 }
@@ -58,42 +58,42 @@ function handleKeyUp(event)
 {
     if(event.keyCode == 87) //w
     {
-        if(rotatingUp == 1)
+        if(rotatingUp == -1)
         {
             rotatingUp = 0
         }
     }
     else if(event.keyCode == 83) //s
     {
-        if(rotatingUp == -1)
+        if(rotatingUp == 1)
         {
             rotatingUp = 0
         }
     }
     else if(event.keyCode == 81) //q
     {
-        if(rotatingSwirl == 1)
+        if(rotatingSwirl == -1)
         {
             rotatingSwirl = 0
         }
     }
     else if(event.keyCode == 69) //e
     {
-        if(rotatingSwirl == -1)
+        if(rotatingSwirl == 1)
         {
             rotatingSwirl = 0
         }
     }
     else if(event.keyCode == 65) //a
     {
-        if(rotatingLeft == 1)
+        if(rotatingLeft == -1)
         {
             rotatingLeft = 0
         }
     }
     else if(event.keyCode == 68) //d
     {
-        if(rotatingLeft == -1)
+        if(rotatingLeft == 1)
         {
             rotatingLeft = 0
         }
