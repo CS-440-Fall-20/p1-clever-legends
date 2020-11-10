@@ -16,6 +16,24 @@ function WebGLSetup(){
     gl.useProgram(program)
 }
 
+function render()
+{
+    gl.clear(gl.COLOR_BUFFER_BIT || gl.DEPTH_BUFFER_BIT)
+    if(mode == 0)
+    {
+        gl.drawElements(gl.POINTS, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
+    }
+    else if (mode == 1)
+    {
+        gl.drawElements(gl.LINE_STRIP, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
+    }
+    else if (mode == 2)
+    {
+        gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
+    }
+}
+
+
 
 
 window.onload = function init() {
@@ -38,6 +56,8 @@ window.onload = function init() {
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
     
     render()
+
+
 
 }
 
