@@ -1,6 +1,105 @@
 var modelViewMatrix, modelViewMatrixLoc
 var projectionMatrix, projectionMatrixLoc
 var eye, at, up
+var currentOrientation
+var rotatingLeft = 0
+var rotatingUp = 0
+var rotatingSwirl = 0
+
+
+function handleKeyDown(event)
+{
+    if(event.keyCode == 87) //w
+    {
+        if(rotatingUp == 0)
+        {
+            rotatingUp = 1
+        }
+    }
+    else if(event.keyCode == 83) //s
+    {
+        if(rotatingUp == 0)
+        {
+            rotatingUp = -1
+        }
+    }
+    else if(event.keyCode == 81) //q
+    {
+        if(rotatingSwirl == 0)
+        {
+            rotatingSwirl = 1
+        }
+    }
+    else if(event.keyCode == 69) //e
+    {
+        if(rotatingSwirl == 0)
+        {
+            rotatingSwirl = -1
+        }
+    }
+    else if(event.keyCode == 65) //a
+    {
+        if(rotatingLeft == 0)
+        {
+            rotatingLeft = 1
+        }
+    }
+    else if(event.keyCode == 68) //d
+    {
+        if(rotatingLeft == 0)
+        {
+            rotatingLeft = -1
+        }
+    }
+}
+
+
+function handleKeyUp(event)
+{
+    if(event.keyCode == 87) //w
+    {
+        if(rotatingUp == 1)
+        {
+            rotatingUp = 0
+        }
+    }
+    else if(event.keyCode == 83) //s
+    {
+        if(rotatingUp == -1)
+        {
+            rotatingUp = 0
+        }
+    }
+    else if(event.keyCode == 81) //q
+    {
+        if(rotatingSwirl == 1)
+        {
+            rotatingSwirl = 0
+        }
+    }
+    else if(event.keyCode == 69) //e
+    {
+        if(rotatingSwirl == -1)
+        {
+            rotatingSwirl = 0
+        }
+    }
+    else if(event.keyCode == 65) //a
+    {
+        if(rotatingLeft == 1)
+        {
+            rotatingLeft = 0
+        }
+    }
+    else if(event.keyCode == 68) //d
+    {
+        if(rotatingLeft == -1)
+        {
+            rotatingLeft = 0
+        }
+    }
+}
+
 
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
@@ -14,6 +113,9 @@ function WebGLSetup(){
     gl.clear(gl.COLOR_BUFFER_BIT)
     program = initShaders(gl, "vertex-shader", "fragment-shader")
     gl.useProgram(program)
+    
+    canvas.addEventListener('keydown', handleKeyDown)
+    canvas.addEventListener('keyup', handleKeyUp)
 }
 
 function render()
@@ -35,11 +137,10 @@ function render()
 
 
 
-
 window.onload = function init() {
     WebGLSetup()
     mode = 1
-    get_patch(-20, 20, -20, 20)
+    get_patch(-30, 30, -30, 30)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     
@@ -50,6 +151,8 @@ window.onload = function init() {
     at = vec3(0, 3, 2)
     up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)
+    currentOrientation = rotateX(0)
+
     projectionMatrix = perspective(60, 1, -2, 2)
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
@@ -60,4 +163,5 @@ window.onload = function init() {
 
 
 }
+
 

@@ -1,6 +1,6 @@
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
 
-noise.seed(Math.random())
+noise.seed(0)
 
 
 function BufferFaces(elements){    
@@ -31,16 +31,18 @@ function getHeight(x, z)
 function getPatchVert(xmin, xmax, zmin, zmax){
 
     var terrainVerts = []
-    var step = 0.2
+    var step = 0.3
+    var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
         {
             var y = getHeight(x, z)
             terrainVerts.push(vec3(x, y, z))
         }
+        collength += 1
     }
-    rowLength = Math.floor((xmax - xmin) / step) + 1
-
+    rowLength = terrainVerts.length / collength
+    
     return terrainVerts
     
 }
@@ -98,11 +100,43 @@ function getPatchFaces()
 }
 
 
-
 function get_patch(xmin, xmax, zmin, zmax){
     terrainVerts = getPatchVert(xmin, xmax, zmin, zmax);
     terrainFaces = getPatchFaces()
     return [terrainVerts, terrainFaces]
+}
+
+
+function updateScene()
+{
+    var speed = 0.00
+    var speedRot = 1
+
+    var rotMat1 = rotateY(rotatingLeft * speedRot)
+    var rotMat2 = rotateX(rotatingUp * speedRot)
+    var rotMatF = mult(rotMat1, rotMat2)
+    
+    var rotMat4 = rotateZ(rotatingSwirl * speedRot)
+        
+    // var tempUp = vec4(up, 0.0)
+    // tempUp = rotMat2
+    
+    var diff = vec4(subtract(at, eye), 0.0)
+    var diff2 = mult(rotMatF, diff).slice(0, 3)
+    at = add(eye, diff2)
+
+    eye = add(eye, scale(speed, diff2))
+    at = add(at, scale(speed, diff2))
+
+    // if(rotatingUp != 0)
+    // {
+        // alert(diff)
+    // }
+
+    modelViewMatrix = lookAt(eye, at, up)
+    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
+    
+    render()
 }
 
 
