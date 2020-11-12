@@ -141,7 +141,7 @@ function render()
 
 window.onload = function init() {
     WebGLSetup()
-    mode = 1
+    mode = 2
     get_patch(-30, 30, -30, 30)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
@@ -149,7 +149,7 @@ window.onload = function init() {
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
     
-    eye = vec3(0, 3, 3)
+    eye = vec3(0, 3, 20)
     at = vec3(0, 3, 2)
     up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)

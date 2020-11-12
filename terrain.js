@@ -36,6 +36,7 @@ function getPatchVert(xmin, xmax, zmin, zmax){
         for (var x = xmin; x <= xmax; x+=step)
         {
             var y = getHeight(x, z)
+
             terrainVerts.push(vec3(x, y, z))
         }
         collength += 1

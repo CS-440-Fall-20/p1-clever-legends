@@ -9,7 +9,15 @@
 		varying vec4 fragColor;
 		void main()
 		{
-            vec4 pos = modelViewMatrix * vec4(vPosition.xyz, 1.0);
+           
+            
+                
+               vec4 pos = vec4(vPosition.xyz, 1.0);
+               if (pos.y < 0.0){
+                   pos.y = 0.0;
+               }
+            
+            pos = modelViewMatrix * pos;
 			vec4 pos2 = vec4(pos.xy / pos.z, pos.z, 1.0);
 			if(pos2.z > 0.0)
 			{
@@ -20,15 +28,19 @@
 				pos2.z = pos2.z / 1000.0;
 			}
             gl_Position = pos2;
-			gl_PointSize = 2.5;
+            gl_PointSize = 2.5;
+            
             if(vPosition.y < 0.0)
             {
-                fragColor = vec4(1,0.2,1,1);
+                
+                fragColor = vec4(0,0,1,1);
             }
             else
             {
-                fragColor = vec4(1,1,1,1);
+                fragColor = vec4(0,1,0,1);
             }
+
+            //fragColor = vec4(1,(vPosition.y+2.0)/4.0,0,1);
 		}
     </script>
 
