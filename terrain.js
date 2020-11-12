@@ -109,7 +109,7 @@ function get_patch(xmin, xmax, zmin, zmax){
 
 function updateScene()
 {
-    var speed = 0.02
+    var speed = 0.2
     var speedRot = 1
 
     var diff = vec4(subtract(at, eye), 0.0)
@@ -128,9 +128,11 @@ function updateScene()
         
     at = add(eye, diff)
 
-    eye = add(eye, scale(speed, diff))
+
     at = add(at, scale(speed, diff))
 
+    // eye = add(eye, vec3(speed + forward*speed, 0, 0))
+    eye = add(add(eye, scale(speed, diff)), vec3(speed + backward*speed, 0, 0))
     // if(rotatingUp != 0)
     // {
         // alert(diff)

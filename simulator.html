@@ -35,6 +35,10 @@
                 
                 fragColor = vec4(0,0,1,1);
             }
+            else if(vPosition.y > 0.6){
+                fragColor = vec4(1,1,1,1);
+            }
+
             else
             {
                 fragColor = vec4(0,1,0,1);
@@ -62,7 +66,7 @@
 </head>
 <h1 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h1>
 <body style="background-color:white; width: auto; height:auto;">
-    <canvas id="gl-canvas" width="500px" height="500px" tabindex="35">
+    <canvas id="gl-canvas" width="1600px" height="800px" tabindex="35">
     Oops ... your browser doesn't support the HTML5 canvas element
 </canvas>
 

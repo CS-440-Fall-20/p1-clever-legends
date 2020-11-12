@@ -5,7 +5,7 @@ var currentOrientation
 var rotatingLeft = 0
 var rotatingUp = 0
 var rotatingSwirl = 0
-
+var forward, backward = 0
 
 function handleKeyDown(event)
 {
@@ -49,6 +49,24 @@ function handleKeyDown(event)
         if(rotatingLeft == 0)
         {
             rotatingLeft = 1
+        }
+    }
+
+    else if(event.keyCode == 38) //up
+    {
+        if(forward == 0)
+        {
+            forward = 1;
+            console.log(forward)
+        }
+    }
+    
+    else if(event.keyCode == 40) //down
+    {
+        if(backward == 0)
+        {
+            backward = 1
+            console.log(backward)
         }
     }
 }
@@ -98,6 +116,24 @@ function handleKeyUp(event)
             rotatingLeft = 0
         }
     }
+
+    else if(event.keyCode == 38) //up
+    {
+        if(forward == 1)
+        {
+            forward = 0
+            console.log('forward')
+        }
+    }
+    
+    else if(event.keyCode == 40) //down
+    {
+        if(backward == 1)
+        {
+            backward = 0
+            console.log('backward')
+        }
+    }
 }
 
 
@@ -107,7 +143,7 @@ function WebGLSetup(){
     if (!gl) { alert("WebGL isn't available") }
     //  Configure WebGL
     gl.viewport(0, 0, canvas.width, canvas.height)
-    gl.clearColor(0,0,0,1)
+    gl.clearColor(173/255, 216/255, 230/255,1)
     gl.enable(gl.DEPTH_TEST);
     //  Load shaders and initialize attribute buffers
     gl.clear(gl.COLOR_BUFFER_BIT)
@@ -149,8 +185,8 @@ window.onload = function init() {
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
     
-    eye = vec3(0, 3, 20)
-    at = vec3(0, 3, 2)
+    eye = vec3(0, 5, 20) //Position of Camera
+    at = vec3(0, 0,0) // 
     up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)
     currentOrientation = rotateX(0)
