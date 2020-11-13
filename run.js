@@ -62,12 +62,11 @@ function updateScene()
     modelViewMatrix = lookAt(eye, at, up)
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
 
-    if(length(subtract(vec2(eye[0], eye[2]), vec2(lastBufferPos[0], lastBufferPos[2]))) > 3)
+    if(length(subtract(vec2(eye[0], eye[2]), vec2(lastBufferPos[0], lastBufferPos[2]))) > 10)
     {        
         var eyeOffset = subtract(eye, eyeOriginalPos)
-        get_patch(-30, 30, -30, 30, eyeOffset)
+        terrainVerts = getPatchVert(-30, 30, -30, 30, eyeOffset)
         BufferVertices(terrainVerts)
-        BufferFaces(terrainFaces)
         
         lastBufferPos = eye.slice(0, 3)
     }
@@ -111,7 +110,7 @@ window.onload = function init() {
     lastBufferPos = eye.slice(0, 3)
     var eyeOffset = subtract(eye, eyeOriginalPos)
 
-    get_patch(-10, 10, -10, 10, eyeOffset)
+    get_patch(-30, 30, -30, 30, eyeOffset)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     

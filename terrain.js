@@ -30,10 +30,6 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
         {
-            if(eyeOffset[0] != 0 || eyeOffset[2] != 0)
-            {
-                console.log('hit')
-            }
             var xTemp = x + eyeOffset[0]
             var zTemp = z + eyeOffset[2]
             xTemp = xTemp - xTemp % step
