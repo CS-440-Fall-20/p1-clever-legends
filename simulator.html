@@ -21,7 +21,7 @@
                }
             
             pos = modelViewMatrix * pos;
-			vec4 pos2 = vec4(pos.xy / pos.z, pos.z, 1.0);
+			vec4 pos2 = vec4(pos.xy / (abs(pos.z) + 0.000001) * sign(pos.z), pos.z, 1.0);
 
             pos2 = projectionMatrix * pos2;
 

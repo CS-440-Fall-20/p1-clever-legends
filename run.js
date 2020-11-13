@@ -7,7 +7,7 @@ var rotatingUp = 0
 var rotatingSwirl = 0
 var forward, backward = 0
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
-var patchLength = 60
+var patchLength = 100
 noise.seed(0)
 
 function WebGLSetup(){
