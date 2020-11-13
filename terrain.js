@@ -24,8 +24,8 @@ function getHeight(x, z)
 
 function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 
+    var step = 1
     var terrainVerts = []
-    var step = 0.8
     var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
@@ -45,7 +45,7 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 }
 
 
-function getPatchFaces()
+function getPatchFaces(mode)
 {
     var collength = terrainVerts.length / rowLength
     var faces = []
@@ -99,55 +99,63 @@ function getPatchFaces()
 
 function get_patch(xmin, xmax, zmin, zmax, eyeOffset){
     terrainVerts = getPatchVert(xmin, xmax, zmin, zmax, eyeOffset);
-    terrainFaces = getPatchFaces()
+    terrainFaces = getPatchFaces(mode)
+    trueVertFaces = getPatchFaces(2)
     return [terrainVerts, terrainFaces]
 }
 
 
 function findNormal(v1, v2, v3)
 {
-  a = subtract(v2, v1)
-  b = subtract(v3, v2)
+    var a = subtract(v2, v1)
+    var b = subtract(v3, v2)
 
-  crossProduct = cross(a, b)
-  return crossProduct
+    var crossProduct = cross(a, b)
+    return crossProduct
+}
+
+
+function setFaceNormals()
+{
+    faceNormal = []
+
+    for(var i = 0; i < trueVertFaces.length; i += 3)
+    {
+        var v1 = terrainVerts[trueVertFaces[i]]
+        var v2 = terrainVerts[trueVertFaces[i+1]]
+        var v3 = terrainVerts[trueVertFaces[i+2]]
+        var normal = findNormal(v1, v2, v3)
+        faceNormal.push(normalize(normal))
+    }    
 }
 
 
 function getPatchNormal(){
 
-  terrainNormal = []
-  var faceNormal = []
-  var integer = []
-  for(var i = 0; i < terrainVerts.length; i++)
-  {
-    terrainNormal[i] = vec3(0, 0, 0)
-    integer[i] = 0
-  }
+    setFaceNormals()
 
-  for(var i = 0; i < terrainFaces.length; i += 3)
-  {
+    terrainNormal = []
+    var integer = []
+    for(var i = 0; i < terrainVerts.length; i++)
+    {
+        terrainNormal[i] = vec3(0, 0, 0)
+        integer[i] = 0
+    }
+    
+    for(var i = 0; i < terrainFaces.length; i++)
+    {
+        var indexFaceNormal = Math.floor(i/3)
+        var elementTerrainFace = terrainFaces[i]
+        var elementFaceNormal = faceNormal[indexFaceNormal]
 
-    normal = findNormal(terrainVerts[i], terrainVerts[i+1], terrainVerts[i+2])
-    faceNormal.push(normalize(normal))
-  }
+        terrainNormal[elementTerrainFace] = add(terrainNormal[elementTerrainFace], elementFaceNormal)
+        integer[elementTerrainFace] += 1
+    }
 
-  for(var i = 0; i < terrainFaces.length; i++)
-  {
-    indexFaceNormal = floor(i/3)
-    elementTerrainFace = terrainFaces[i]
-    elementFaceNormal = faceNormal[indexFaceNormal]
+    for(var i = 0; i < terrainNormal.length; i++)
+    {
+        terrainNormal[i] = scale(1/integer[i], terrainNormal[i])
+    }
 
-    terrainNormal[elementTerrainFace] =
-    add(terrainNormal[elementTerrainFace], elementFaceNormal)
-
-    integer[elementTerrainFace] += 1
-  }
-
-  for(var i = 0; i < terrainNormal.length; i++)
-  {
-    terrainNormal[i] = scale(1/integer[i], terrainNormal[i])
-  }
-
-  return terrainNormal
+    return terrainNormal
 }

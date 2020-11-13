@@ -7,9 +7,10 @@ var rotatingUp = 0
 var rotatingSwirl = 0
 var forward, backward = 0
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
+var trueVertFaces
 var patchLength = 100
 var acc = 0.00
-var terrainNormal
+var terrainNormal, faceNormal
 noise.seed(0)
 
 function WebGLSetup(){
@@ -137,9 +138,9 @@ window.onload = function init() {
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
 
 
-    //terrainNormal = getPatchNormal()
+    terrainNormal = getPatchNormal()
 
-    console.log(terrainNormal)
+    // console.log(terrainNormal)
 
     render()
 }
