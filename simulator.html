@@ -4,18 +4,15 @@
 <head>
     <script id="vertex-shader" type="x-shader/x-vertex">
         attribute vec3 vPosition;
-        //attribute vec4 vColor;
+        attribute vec4 vColor;
         //attribute vec4 vNormal;
 		varying vec4 fragColor;
-
-
-
         uniform mat4 modelViewMatrix;
         uniform mat4 projectionMatrix; 
 
 		void main()
 		{
-               vec4 pos = vec4(vPosition.xyz, 1.0);
+            vec4 pos = vec4(vPosition.xyz, 1.0);
                if (pos.y < 0.0){
                    pos.y = 0.0;
                }
@@ -26,26 +23,25 @@
             pos2 = projectionMatrix * pos2;
 
             gl_Position = pos2;
-            gl_PointSize = 1.0;
+            gl_PointSize = 2.5;
             
             if(vPosition.y < 0.0)
-            {
+                {
                 
                 fragColor = vec4(0,0,1,1);
-            }
-            //else if(vPosition.y > 1.1 && vPosition.y < 1.9){
-              //          fragColor = vec4(139/255,69/255,19/255,1);
-                //    }
-            else if(vPosition.y > 1.9){
-                fragColor = vec4(1,1,1,1);
-            }
-
-            else
-            {
-                fragColor = vec4(0,1,0,1);
-            }
-
-            //fragColor = vec4(1,(vPosition.y+2.0)/4.0,0,1);
+                }
+            else if(vPosition.y > 1.1 && vPosition.y < 1.9){
+                      fragColor = vec4(139/255,69/255,19/255,1);
+                }
+                else if(vPosition.y > 1.9){
+                    fragColor = vec4(1,1,1,1);
+                }
+                
+                else
+                {
+                    fragColor = vec4(0,1,0,1);
+                }
+            //fragColor = vec4(1,1,1,1);
 		}
     </script>
 
@@ -69,23 +65,41 @@
     <script type="text/javascript" src="run.js"></script>
     <script type="text/javascript" src="eventhandler.js"></script>
 </head>
-<h1 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h1>
+<h2 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h2  >
 <body style="background-color:white; width: auto; height:auto;">
-    <canvas id="gl-canvas" width="500px" height="500px" tabindex="35">
+    <canvas id="gl-canvas" width="800px" height="500px" tabindex="35">
         Oops ... your browser doesn't support the HTML5 canvas element
     </canvas>
 
-    <div style="color: black; font-family: 'Courier New', Courier, monospace; position: relative; width: 800px; height: 10px;">
+    <script>
+        var s = setInterval(function() {document.getElementById("speed").innerHTML = Math.round(speed*1000)/1000;}, 30);
+        var a = setInterval(function() {document.getElementById("acc").innerHTML = acc;}, 30);
+        var al = setInterval(function() {document.getElementById("alt").innerHTML = Math.round(eye.slice(2,3)*1000)/1000;}, 30);
+        var r = setInterval(function() {document.getElementById("roll").innerHTML = trotatingSwirl;}, 30);
+        var p = setInterval(function() {document.getElementById("pitch").innerHTML = trotatingUp;}, 30);
+        var yi = setInterval(function() {document.getElementById("yaw").innerHTML = trotatingLeft;}, 30);
+        var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
+        var sh = setInterval(function() {document.getElementById("Shading").innerHTML = shading;}, 30);
+    </script>
+    
+    <div style="color: black; font-family: 'Courier New', Courier, monospace; position: absolute; top: 47px; left: 820px;">
+
         
-        <p>Shading:<script type="text/javascript" "> document.write(1)     </script></p>
-        <p>Speed:<script type="text/javascript" "> document.write(1)       </script></p> 
-        <p>Acceleration:<script type="text/javascript" > document.write(1) </script></p>
-        <p>Roll:<script type="text/javascript" "> document.write(1)        </script></p>
-        <p>Pitch:<script type="text/javascript" > document.write(1)        </script></p> 
-        <p>Yaw:<script type="text/javascript" "> document.write(1)         </script></p>
+    <p>
+        <b>Speed:</b>             <a><a id="speed"></a>  </a>  <br>
+        <a>  </a><b>Acceleration:</b>      <a id="acc"></a> <br>
+        <a>  </a><b>Altitude:</b>           <a id="alt"></a> <br>
+        <a>  </a><b>Roll:</b>          <a id="roll"></a> <br>
+        <a>  </a><b>Pitch:</b>             <a id="pitch"></a> <br>
+        <a>  </a><b>Yaw:</b>               <a id="yaw"></a><br> <br>
+        <a>  </a><b>Terrain View:</b>      <a id="tv"></a> <br>
+        <a>  </a><b>Shading:</b>           <a id="Shading"></a>
+    </p>
 
     </div>
 
+    
+    
 </body>
 
 </html>

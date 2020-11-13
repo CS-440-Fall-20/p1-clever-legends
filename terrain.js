@@ -18,13 +18,13 @@ function BufferVertices(vertices){
 
 function getHeight(x, z)
 {
-	return noise.perlin2(x/4 , z/4)*6
+	return noise.perlin2(x/3, z/3)*6
 }
 
 
 function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 
-    var step = 1
+    var step = 1;
     var terrainVerts = []
     var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
