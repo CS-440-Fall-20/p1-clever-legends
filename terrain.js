@@ -23,7 +23,7 @@ function BufferVertices(vertices){
 
 function getHeight(x, z)
 {
-	return noise.perlin2(x / 3, z / 3) * 2
+	return noise.perlin2(x/4 , z/4)*6
 }
 
 
@@ -109,30 +109,29 @@ function get_patch(xmin, xmax, zmin, zmax){
 
 function updateScene()
 {
-    var speed = 0.2
-    var speedRot = 1
+    var speed = 0.002 
+    var speedRot = 0.2
+
+    var rotMat1 = rotateY(rotatingLeft * speedRot)
+    var rotMat2 = rotateX(rotatingUp * speedRot)
+    var rotMatF = mult(rotMat1, rotMat2)
+
+    var rotMat4 = rotateZ(rotatingSwirl * speedRot)
+
+    // var tempUp = vec4(up, 0.0)
+    // tempUp = rotMat2
 
     var diff = vec4(subtract(at, eye), 0.0)
+    var diff2 = mult(rotMatF, diff).slice(0, 3)
+    at = add(eye, diff2)
 
-    var rotMat1 = rotate(rotatingLeft * speedRot, up)
-    diff = mult(rotMat1, diff)
+    eye = add(eye, scale(speed, diff2))
+    at = add(at, scale(speed, diff2))
 
-    var perp = cross(diff.slice(0,3), up)
-    var rotMat2 = rotate(rotatingUp * speedRot, perp)
-    
-    diff = mult(rotMat2, diff).slice(0,3)
-    up = mult(rotMat2, vec4(up, 0.0))
-    
-    var rotMat3 = rotate(rotatingSwirl * speedRot, diff)
-    up = mult(rotMat3, up).slice(0,3)
-        
-    at = add(eye, diff)
-
-
-    at = add(at, scale(speed, diff))
-
+    //This is supposed to move forward and back 
     // eye = add(eye, vec3(speed + forward*speed, 0, 0))
-    eye = add(add(eye, scale(speed, diff)), vec3(speed + backward*speed, 0, 0))
+    // eye  = add(eye, vec3(speed + backward*speed, 0, 0))
+
     // if(rotatingUp != 0)
     // {
         // alert(diff)
@@ -140,9 +139,12 @@ function updateScene()
 
     modelViewMatrix = lookAt(eye, at, up)
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
-    
+
     render()
 }
+
+
+
 
 
 

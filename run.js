@@ -56,7 +56,7 @@ function handleKeyDown(event)
     {
         if(forward == 0)
         {
-            forward = 1;
+            forward = -1;
             console.log(forward)
         }
     }
@@ -67,6 +67,28 @@ function handleKeyDown(event)
         {
             backward = 1
             console.log(backward)
+        }
+    }
+
+    else if(event.keyCode == 27){
+
+        gl = 0;
+    }
+
+    else if(event.keyCode == 32){
+        if (mode == 0){
+            mode = 1;
+            console.log(mode)
+        }
+        
+        else if(mode == 1){
+            mode = 2;
+            console.log(mode)
+        }
+        
+        else if(mode == 2){
+            mode = 0;
+            console.log(mode)
         }
     }
 }
@@ -119,7 +141,7 @@ function handleKeyUp(event)
 
     else if(event.keyCode == 38) //up
     {
-        if(forward == 1)
+        if(forward == -1)
         {
             forward = 0
             console.log('forward')
@@ -131,7 +153,7 @@ function handleKeyUp(event)
         if(backward == 1)
         {
             backward = 0
-            console.log('backward')
+            console.log(backward)
         }
     }
 }
@@ -177,15 +199,15 @@ function render()
 
 window.onload = function init() {
     WebGLSetup()
-    mode = 2
-    get_patch(-30, 30, -30, 30)
+    mode = 2 
+    get_patch(-10, 10, -10, 10)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
     
-    eye = vec3(0, 5, 20) //Position of Camera
+    eye = vec3(0, 5, 5) //Position of Camera
     at = vec3(0, 0,0) // 
     up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)
