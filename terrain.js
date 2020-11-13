@@ -25,7 +25,7 @@ function getHeight(x, z)
 function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 
     var terrainVerts = []
-    var step = 0.3
+    var step = 1.0
     var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)

@@ -22,14 +22,9 @@
             
             pos = modelViewMatrix * pos;
 			vec4 pos2 = vec4(pos.xy / pos.z, pos.z, 1.0);
-			if(pos2.z > 0.0)
-			{
-				pos2.z = -1000000000.0;
-			}
-			else
-			{
-				pos2.z = pos2.z / 1000.0;
-			}
+
+            pos2 = projectionMatrix * pos2;
+
             gl_Position = pos2;
             gl_PointSize = 1.0;
             
