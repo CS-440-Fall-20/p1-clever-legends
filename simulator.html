@@ -9,9 +9,6 @@
 		varying vec4 fragColor;
 		void main()
 		{
-           
-            
-                
                vec4 pos = vec4(vPosition.xyz, 1.0);
                if (pos.y < 0.0){
                    pos.y = 0.0;
@@ -28,7 +25,7 @@
 				pos2.z = pos2.z / 1000.0;
 			}
             gl_Position = pos2;
-            gl_PointSize = 2.5;
+            gl_PointSize = 1.0;
             
             if(vPosition.y < 0.0)
             {
@@ -66,6 +63,7 @@
     <script type="text/javascript" src="perlin.js"></script>
     <script type="text/javascript" src="terrain.js"></script>
     <script type="text/javascript" src="run.js"></script>
+    <script type="text/javascript" src="eventhandler.js"></script>
 </head>
 <h1 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h1>
 <body style="background-color:white; width: auto; height:auto;">

@@ -1,8 +1,3 @@
-var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
-
-noise.seed(0)
-
-
 function BufferFaces(elements){    
     iBuffer = gl.createBuffer() // Index / face buffer
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer)
@@ -30,7 +25,7 @@ function getHeight(x, z)
 function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 
     var terrainVerts = []
-    var step = 1
+    var step = 0.3
     var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
         for (var x = xmin; x <= xmax; x+=step)
@@ -112,57 +107,6 @@ function get_patch(xmin, xmax, zmin, zmax, eyeOffset){
     return [terrainVerts, terrainFaces]
 }
 
-
-function updateScene()
-{
-    var speed = 0.01
-    var speedRot = 1
-
-    var diff = vec4(subtract(at, eye), 0.0)
-
-    var rotMat1 = rotate(rotatingLeft * speedRot, up)
-    diff = mult(rotMat1, diff)
-
-    var perp = cross(diff.slice(0,3), up)
-    var rotMat2 = rotate(rotatingUp * speedRot, perp)
-    
-    diff = mult(rotMat2, diff).slice(0,3)
-    up = mult(rotMat2, vec4(up, 0.0))
-
-    var rotMat3 = rotate(rotatingSwirl * speedRot, diff)
-    up = mult(rotMat3, up).slice(0,3)
-
-    at = add(eye, diff)
-    
-    eye = add(eye, scale(speed, diff))
-    at = add(at, scale(speed, diff))
-
-    //This is supposed to move forward and back 
-    // eye = add(eye, vec3(speed + forward*speed, 0, 0))
-    // eye  = add(eye, vec3(speed + backward*speed, 0, 0))
-
-    // if(rotatingUp != 0)
-    // {
-        // alert(diff)
-    // }
-
-    modelViewMatrix = lookAt(eye, at, up)
-    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
-
-    if(length(subtract(vec2(eye[0], eye[2]), vec2(lastBufferPos[0], lastBufferPos[2]))) > 3)
-    {        
-        var eyeOffset = subtract(eye, eyeOriginalPos)
-
-
-        get_patch(-30, 30, -30, 30, eyeOffset)
-        BufferVertices(terrainVerts)
-        BufferFaces(terrainFaces)
-        
-        lastBufferPos = eye.slice(0, 3)
-    }
-
-    render()
-}
 
 
 

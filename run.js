@@ -6,158 +6,8 @@ var rotatingLeft = 0
 var rotatingUp = 0
 var rotatingSwirl = 0
 var forward, backward = 0
-
-function handleKeyDown(event)
-{
-    if(event.keyCode == 87) //w
-    {
-        if(rotatingUp == 0)
-        {
-            rotatingUp = -1
-        }
-    }
-    else if(event.keyCode == 83) //s
-    {
-        if(rotatingUp == 0)
-        {
-            rotatingUp = 1
-        }
-    }
-    else if(event.keyCode == 81) //q
-    {
-        if(rotatingSwirl == 0)
-        {
-            rotatingSwirl = -1
-        }
-    }
-    else if(event.keyCode == 69) //e
-    {
-        if(rotatingSwirl == 0)
-        {
-            rotatingSwirl = 1
-        }
-    }
-    else if(event.keyCode == 65) //a
-    {
-        if(rotatingLeft == 0)
-        {
-            rotatingLeft = -1
-        }
-    }
-    else if(event.keyCode == 68) //d
-    {
-        if(rotatingLeft == 0)
-        {
-            rotatingLeft = 1
-        }
-    }
-
-    else if(event.keyCode == 38) //up
-    {
-        if(forward == 0)
-        {
-            forward = -1;
-            console.log(forward)
-        }
-    }
-    
-    else if(event.keyCode == 40) //down
-    {
-        if(backward == 0)
-        {
-            backward = 1
-            console.log(backward)
-        }
-    }
-
-    else if(event.keyCode == 27){
-
-        gl = 0;
-    }
-
-    else if(event.keyCode == 32){
-        if (mode == 0){
-            mode = 1;
-            console.log(mode)
-        }
-        
-        else if(mode == 1){
-            mode = 2;
-            console.log(mode)
-        }
-        
-        else if(mode == 2){
-            mode = 0;
-            console.log(mode)
-        }
-    }
-}
-
-
-function handleKeyUp(event)
-{
-    if(event.keyCode == 87) //w
-    {
-        if(rotatingUp == -1)
-        {
-            rotatingUp = 0
-        }
-    }
-    else if(event.keyCode == 83) //s
-    {
-        if(rotatingUp == 1)
-        {
-            rotatingUp = 0
-        }
-    }
-    else if(event.keyCode == 81) //q
-    {
-        if(rotatingSwirl == -1)
-        {
-            rotatingSwirl = 0
-        }
-    }
-    else if(event.keyCode == 69) //e
-    {
-        if(rotatingSwirl == 1)
-        {
-            rotatingSwirl = 0
-        }
-    }
-    else if(event.keyCode == 65) //a
-    {
-        if(rotatingLeft == -1)
-        {
-            rotatingLeft = 0
-        }
-    }
-    else if(event.keyCode == 68) //d
-    {
-        if(rotatingLeft == 1)
-        {
-            rotatingLeft = 0
-        }
-    }
-
-    else if(event.keyCode == 38) //up
-    {
-        if(forward == -1)
-        {
-            forward = 0
-            console.log('forward')
-        }
-    }
-    
-    else if(event.keyCode == 40) //down
-    {
-        if(backward == 1)
-        {
-            backward = 0
-            console.log(backward)
-        }
-    }
-}
-
+var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
+noise.seed(0)
 
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
@@ -176,6 +26,56 @@ function WebGLSetup(){
     canvas.addEventListener('keyup', handleKeyUp)
 }
 
+function updateScene()
+{
+    var speed = 0.05
+    var speedRot = 1
+
+    var diff = vec4(subtract(at, eye), 0.0)
+
+    var rotMat1 = rotate(rotatingLeft * speedRot, up)
+    diff = mult(rotMat1, diff)
+
+    var perp = cross(diff.slice(0,3), up)
+    var rotMat2 = rotate(rotatingUp * speedRot, perp)
+    
+    diff = mult(rotMat2, diff).slice(0,3)
+    up = mult(rotMat2, vec4(up, 0.0))
+
+    var rotMat3 = rotate(rotatingSwirl * speedRot, diff)
+    up = mult(rotMat3, up).slice(0,3)
+
+    at = add(eye, diff)
+    
+    eye = add(eye, scale(speed, diff))
+    at = add(at, scale(speed, diff))
+
+    //This is supposed to move forward and back 
+    // eye = add(eye, vec3(speed + forward*speed, 0, 0))
+    // eye  = add(eye, vec3(speed + backward*speed, 0, 0))
+
+    // if(rotatingUp != 0)
+    // {
+        // alert(diff)
+    // }
+
+    modelViewMatrix = lookAt(eye, at, up)
+    gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
+
+    if(length(subtract(vec2(eye[0], eye[2]), vec2(lastBufferPos[0], lastBufferPos[2]))) > 3)
+    {        
+        var eyeOffset = subtract(eye, eyeOriginalPos)
+        get_patch(-30, 30, -30, 30, eyeOffset)
+        BufferVertices(terrainVerts)
+        BufferFaces(terrainFaces)
+        
+        lastBufferPos = eye.slice(0, 3)
+    }
+
+    render()
+}
+
+
 function render()
 {
     gl.clear(gl.COLOR_BUFFER_BIT || gl.DEPTH_BUFFER_BIT)
@@ -191,24 +91,27 @@ function render()
     {
         gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
     }
+    else if (mode == 3)
+    {
+        gl.drawElements(gl.TRIANGLE_STRIP, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
+    }
     
     window.requestAnimationFrame(updateScene)
 }
-
 
 
 window.onload = function init() {
     eye = vec3(0, 5, 5) //Position of Camera
     at = vec3(0, 5, 4) 
     up = vec3(0, -1, 0)
-    mode = 2
+    mode = 2    
 
     WebGLSetup()
     eyeOriginalPos = eye.slice(0, 3)
     lastBufferPos = eye.slice(0, 3)
     var eyeOffset = subtract(eye, eyeOriginalPos)
 
-    get_patch(-30, 30, -30, 30, eyeOffset)
+    get_patch(-10, 10, -10, 10, eyeOffset)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     
