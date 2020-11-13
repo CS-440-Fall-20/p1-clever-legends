@@ -101,11 +101,7 @@ function render()
     {
         gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
     }
-    else if (mode == 3)
-    {
-        gl.drawElements(gl.TRIANGLE_STRIP, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-    }
-
+   
     window.requestAnimationFrame(updateScene)
 }
 

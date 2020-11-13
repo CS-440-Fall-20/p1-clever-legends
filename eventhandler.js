@@ -129,7 +129,7 @@ function handleKeyUp(event)
 
 
 function speedUp() {
-    if(acc < 0.5)
+    if(acc < 0.6)
     {
         acc += 0.01
         console.log('Accelerating')
