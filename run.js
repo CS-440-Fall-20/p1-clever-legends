@@ -7,7 +7,7 @@ var rotatingUp = 0
 var rotatingSwirl = 0
 var forward, backward = 0
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
-var patchLength = 30
+var patchLength = 60
 noise.seed(0)
 
 function WebGLSetup(){
@@ -111,7 +111,7 @@ window.onload = function init() {
     eye = vec3(0, 5, 5) //Position of Camera
     at = vec3(0, 5, 4) 
     up = vec3(0, -1, 0)
-    mode = 2    
+    mode = 1
 
     WebGLSetup()
     eyeOriginalPos = eye.slice(0, 3)
@@ -128,7 +128,7 @@ window.onload = function init() {
     modelViewMatrix = lookAt(eye, at, up)
     currentOrientation = rotateX(0)
 
-    projectionMatrix = ortho(-1, 1, -1, 1, 1, 20)
+    projectionMatrix = ortho(-1, 1, -1, 1, 2, 40)
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
