@@ -8,6 +8,7 @@ var rotatingSwirl = 0
 var forward, backward = 0
 var canvas, gl, terrainVerts, terrainFaces, mode, rowLength
 var patchLength = 100
+var acc = 0.00
 noise.seed(0)
 
 function WebGLSetup(){
@@ -37,7 +38,8 @@ async function newPatchVert(eyeOffset)
 
 function updateScene()
 {
-    var speed = 0.05
+    var speed = 0.02
+    speed += acc
     var speedRot = 1
 
     var diff = vec4(subtract(at, eye), 0.0)

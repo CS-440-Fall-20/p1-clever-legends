@@ -45,28 +45,21 @@ function handleKeyDown(event)
 
     else if(event.keyCode == 38) //up
     {
-        if(forward == 0)
-        {
-            forward = -1;
-            console.log(forward)
-        }
+       speedUp();
     }
     
     else if(event.keyCode == 40) //down
     {
-        if(backward == 0)
-        {
-            backward = 1
-            console.log(backward)
-        }
+        slowDown();    
+        
     }
 
-    else if(event.keyCode == 27){
+    else if(event.keyCode == 27){ //Esc
 
         gl = 0;
     }
 
-    else if(event.keyCode == 32){
+    else if(event.keyCode == 32){ //Change Coloring Modes
         if (mode == 0){
             mode = 1;
             console.log(mode)
@@ -130,21 +123,29 @@ function handleKeyUp(event)
         }
     }
 
-    else if(event.keyCode == 38) //up
+   
+}
+
+
+
+function speedUp() {
+    if(acc < 0.5)
     {
-        if(forward == -1)
-        {
-            forward = 0
-            console.log('forward')
-        }
+        acc += 0.01
+        console.log('Accelerating')
+    }
+    else{
+    console.log('Max Speed Reached')
+    console.log(acc)
+    }
+}
+
+function slowDown() {
+
+    if(acc > 0)
+    {
+        acc -= 0.01
+        console.log('Decelerating')
     }
     
-    else if(event.keyCode == 40) //down
-    {
-        if(backward == 1)
-        {
-            backward = 0
-            console.log(backward)
-        }
-    }
 }
