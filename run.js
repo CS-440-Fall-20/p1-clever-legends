@@ -1,6 +1,6 @@
 var modelViewMatrix, modelViewMatrixLoc
 var projectionMatrix, projectionMatrixLoc
-var eye, at, up
+var eye, at, up, eyeOriginalPos, lastBufferPos
 var currentOrientation
 var rotatingLeft = 0
 var rotatingUp = 0
@@ -198,18 +198,23 @@ function render()
 
 
 window.onload = function init() {
+    eye = vec3(0, 5, 5) //Position of Camera
+    at = vec3(0, 5, 4) 
+    up = vec3(0, -1, 0)
+    mode = 2
+
     WebGLSetup()
-    mode = 2 
-    get_patch(-10, 10, -10, 10)
+    eyeOriginalPos = eye.slice(0, 3)
+    lastBufferPos = eye.slice(0, 3)
+    var eyeOffset = subtract(eye, eyeOriginalPos)
+
+    get_patch(-30, 30, -30, 30, eyeOffset)
     BufferVertices(terrainVerts)
     BufferFaces(terrainFaces)
     
     modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
     projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
     
-    eye = vec3(0, 5, 5) //Position of Camera
-    at = vec3(0, 0,0) // 
-    up = vec3(0, -1, 0)
     modelViewMatrix = lookAt(eye, at, up)
     currentOrientation = rotateX(0)
 
@@ -219,9 +224,6 @@ window.onload = function init() {
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
     
     render()
-
-
-
 }
 
 
