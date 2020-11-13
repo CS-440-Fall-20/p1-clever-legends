@@ -1,7 +1,7 @@
-function BufferFaces(elements){    
+function BufferFaces(elements){
     iBuffer = gl.createBuffer() // Index / face buffer
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer)
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(elements), gl.STATIC_DRAW)    
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(elements), gl.STATIC_DRAW)
 }
 
 function BufferVertices(vertices){
@@ -9,7 +9,7 @@ function BufferVertices(vertices){
     vBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer)
     gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW)
-    
+
     vPosition = gl.getAttribLocation(program, "vPosition")
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0)
     gl.enableVertexAttribArray(vPosition)
@@ -41,7 +41,7 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
     }
     rowLength = terrainVerts.length / collength
     return terrainVerts
-    
+
 }
 
 
@@ -93,7 +93,7 @@ function getPatchFaces()
     }
 
     return faces
-    
+
 }
 
 
@@ -104,8 +104,50 @@ function get_patch(xmin, xmax, zmin, zmax, eyeOffset){
 }
 
 
+function findNormal(v1, v2, v3)
+{
+  a = subtract(v2, v1)
+  b = subtract(v3, v2)
+
+  crossProduct = cross(a, b)
+  return crossProduct
+}
 
 
+function getPatchNormal(){
 
+  terrainNormal = []
+  var faceNormal = []
+  var integer = []
+  for(var i = 0; i < terrainVerts.length; i++)
+  {
+    terrainNormal[i] = vec3(0, 0, 0)
+    integer[i] = 0
+  }
 
+  for(var i = 0; i < terrainFaces.length; i += 3)
+  {
 
+    normal = findNormal(terrainVerts[i], terrainVerts[i+1], terrainVerts[i+2])
+    faceNormal.push(normalize(normal))
+  }
+
+  for(var i = 0; i < terrainFaces.length; i++)
+  {
+    indexFaceNormal = floor(i/3)
+    elementTerrainFace = terrainFaces[i]
+    elementFaceNormal = faceNormal[indexFaceNormal]
+
+    terrainNormal[elementTerrainFace] =
+    add(terrainNormal[elementTerrainFace], elementFaceNormal)
+
+    integer[elementTerrainFace] += 1
+  }
+
+  for(var i = 0; i < terrainNormal.length; i++)
+  {
+    terrainNormal[i] = scale(1/integer[i], terrainNormal[i])
+  }
+
+  return terrainNormal
+}
