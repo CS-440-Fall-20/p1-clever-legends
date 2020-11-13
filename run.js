@@ -128,7 +128,7 @@ window.onload = function init() {
     modelViewMatrix = lookAt(eye, at, up)
     currentOrientation = rotateX(0)
 
-    projectionMatrix = ortho(-1, 1, -1, 1, 2, 40)
+    projectionMatrix = ortho(-1, 1, -1, 1, 4, 40)
 
     gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
     gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
