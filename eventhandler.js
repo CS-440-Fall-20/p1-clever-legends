@@ -65,12 +65,12 @@ function handleKeyDown(event)
     
     else if(event.keyCode == 67){ //Change Coloring Modes
         
-        changeTerrainShadingView(shading);
+        changeShading();
     }
 
     else if(event.keyCode == 86){ //Change Coloring Modes
         
-        changeTerrainShadingView(mode);
+        changeTerrainView();
     }
 
     else if (event.keyCode == 38) //up
@@ -203,13 +203,21 @@ function slowDown() {
     {speed += acc}
 }
 
-function changeTerrainShadingView(mode){
+function changeTerrainView(){
     if (mode == 0) 
         mode = 1;
     else if(mode == 1) 
         mode = 2;    
     else if(mode == 2) 
         mode = 0;
+}
+function changeShading(){
+    if (shading == 0) 
+    shading = 1;
+    else if(shading == 1) 
+    shading = 2;    
+    else if(shading == 2) 
+    shading = 0;
 }
 
 function exit(){
