@@ -3,6 +3,7 @@ var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
 var projectionMatrix, projectionMatrixLoc
 var eye, at, up, eyeOriginalPos, lastBufferPos
+var left, right, bottom, top1, near, far
 var currentOrientation
 var rotatingLeft = 0
 var rotatingUp = 0
@@ -84,6 +85,9 @@ function updateScene()
         modelViewMatrix = lookAt(eye, at, up)
         gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
 
+        projectionMatrix = ortho(left, right, bottom, top1, near, far)
+        gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
+
         if(length(subtract(vec2(eye[0], eye[2]), vec2(lastBufferPos[0], lastBufferPos[2]))) > 10)
         {
             var eyeOffset = subtract(eye, eyeOriginalPos)
@@ -116,6 +120,12 @@ window.onload = function init() {
     eye = vec3(0,5, 5) //Position of Camera
     at = vec3(0, 5, 4)
     up = vec3(0, -1, 0)
+    left = -1
+    right = 1
+    bottom = -1
+    top1 = 1
+    near = 0.00
+    far = 40
     mode = 1
     shading = 1
     WebGLSetup()
@@ -136,7 +146,7 @@ window.onload = function init() {
         modelViewMatrix = lookAt(eye, at, up)
         currentOrientation = rotateX(0)
 
-        projectionMatrix = ortho(-1, 1, -1, 1, 0.01, 40)
+        projectionMatrix = ortho(left, right, bottom, top1, near, far)
 
         gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
         gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))

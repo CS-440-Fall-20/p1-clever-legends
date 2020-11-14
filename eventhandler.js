@@ -1,4 +1,13 @@
-shiftPressed = false
+var shiftPressed = false
+var projDecrement = 0.05
+var farChange = 10
+var nearChange = 2
+var ogLeft = -1
+var ogRight = 1
+var ogBottom = -1
+var ogTop1 = 1
+var ogNear = 0.00
+var ogFar = 40
 
 function handleKeyDown(event)
 {
@@ -93,31 +102,72 @@ function handleKeyDown(event)
         console.log("Shift Pressed")
     }
 
-    else if (shiftPressed)
+
+    else if (event.keyCode == 49)
     {
-        if (event.keyCode == 49)
-        {
-            console.log("Shift and 1")
+        console.log("1")
+
+        if ((shiftPressed) && ((ogLeft - left) < projDecrement * 5)){
+            left -= projDecrement
         }
-        else if (event.keyCode == 50)
-        {
-            console.log("Shift and 2")
+        else if ((!shiftPressed) && ((left - ogLeft) < projDecrement * 5)){
+            left += projDecrement
         }
-        else if (event.keyCode == 51)
-        {
-            console.log("Shift and 3")
+    }
+
+    else if (event.keyCode == 50)
+    {
+        console.log("2")
+
+        if ((shiftPressed) && ((ogRight - right) < projDecrement * 5)){
+            right -= projDecrement
         }
-        else if (event.keyCode == 52)
-        {
-            console.log("Shift and 4")
+        else if ((!shiftPressed) && ((right - ogRight) < projDecrement * 5)){
+            right += projDecrement
         }
-        else if (event.keyCode == 53)
-        {
-            console.log("Shift and 5")
+    }
+    else if (event.keyCode == 51)
+    {
+        console.log("3")
+
+        if ((shiftPressed) && ((ogTop1 - top1) < projDecrement * 5)){
+            top1 -= projDecrement
         }
-        else if (event.keyCode == 54)
-        {
-            console.log("Shift and 6")
+        else if ((!shiftPressed) && ((top1 - ogTop1) < projDecrement * 5)){
+            top1 += projDecrement
+        }
+    }
+    else if (event.keyCode == 52)
+    {
+        console.log("4")
+
+        if ((shiftPressed) && ((ogBottom - bottom) < projDecrement * 5)){
+            bottom -= projDecrement
+        }
+        else if ((!shiftPressed) && ((bottom - ogBottom) < projDecrement * 5)){
+            bottom += projDecrement
+        }
+    }
+    else if (event.keyCode == 53)
+    {
+        console.log("5")
+
+        if ((shiftPressed) && ((ogNear - near) < nearChange * 0)){
+            near -= nearChange
+        }
+        else if ((!shiftPressed) && ((near - ogNear) < nearChange * 3)){
+            near += nearChange
+        }
+    }
+    else if (event.keyCode == 54)
+    {
+        console.log("6")
+
+        if ((shiftPressed) && ((ogFar - far) < farChange * 2)){
+            far -= farChange
+        }
+        else if ((!shiftPressed) && ((far - ogFar) < farChange * 4)){
+            far += farChange
         }
     }
 }
