@@ -4,19 +4,19 @@ function handleKeyDown(event)
 {
     if(event.keyCode == 87) //w
     {
-        if(rotatingUp == 0)
+        if(rotatingUp == 0 && rotatingUpAngle > -50)
         {
             rotatingUp = -1
-            trotatingUp = "Up"
+
         }
         
     }
-    else if(event.keyCode == 83) //s
+    else if(event.keyCode == 83 && rotatingUpAngle < 70) //s
     {
         if(rotatingUp == 0)
         {
             rotatingUp = 1
-            trotatingUp = "Down"
+
         }
  
     }
@@ -25,7 +25,7 @@ function handleKeyDown(event)
         if(rotatingSwirl == 0)
         {
             rotatingSwirl = -1
-            trotatingSwirl = "Counter-Clockwise"
+
         }
     }
     else if(event.keyCode == 69) //e
@@ -33,7 +33,7 @@ function handleKeyDown(event)
         if(rotatingSwirl == 0)
         {
             rotatingSwirl = 1
-            trotatingSwirl = "Clockwise"
+
         }
    
     }
@@ -42,7 +42,7 @@ function handleKeyDown(event)
         if(rotatingLeft == 0)
         {
             rotatingLeft = -1
-            trotatingLeft = "Left"
+
         }
 
     }
@@ -51,7 +51,7 @@ function handleKeyDown(event)
         if(rotatingLeft == 0)
         {
             rotatingLeft = 1
-            trotatingLeft = "Right"
+
         }
      
     }
@@ -129,7 +129,7 @@ function handleKeyUp(event)
         if(rotatingUp == -1)
         {
             rotatingUp = 0
-            trotatingUp = "None"
+
         }
     }
     else if(event.keyCode == 83) //s
@@ -137,7 +137,7 @@ function handleKeyUp(event)
         if(rotatingUp == 1)
         {
             rotatingUp = 0
-            trotatingUp = "None"
+
         }
     }
     else if(event.keyCode == 81) //q
@@ -145,7 +145,7 @@ function handleKeyUp(event)
         if(rotatingSwirl == -1)
         {
             rotatingSwirl = 0
-            trotatingSwirl = "None"
+
         }
     }
     else if(event.keyCode == 69) //e
@@ -153,7 +153,7 @@ function handleKeyUp(event)
         if(rotatingSwirl == 1)
         {
             rotatingSwirl = 0
-            trotatingSwirl = "None"
+
         }
     }
     else if(event.keyCode == 65) //a
@@ -161,7 +161,7 @@ function handleKeyUp(event)
         if(rotatingLeft == -1)
         {
             rotatingLeft = 0
-            trotatingLeft = "None"
+
         }
     }
     else if(event.keyCode == 68) //d
@@ -169,7 +169,7 @@ function handleKeyUp(event)
         if(rotatingLeft == 1)
         {
             rotatingLeft = 0
-            trotatingLeft = "None"
+
         }
     }
     else if (event.keyCode == 38) //up

@@ -64,8 +64,8 @@
         var s = setInterval(function() {document.getElementById("speed").innerHTML = Math.round(speed*1000)/1000;}, 30);
         var a = setInterval(function() {document.getElementById("acc").innerHTML = acc;}, 30);
         var al = setInterval(function() {document.getElementById("alt").innerHTML = Math.round(eye[1]*1000)/1000;}, 30);
-        var r = setInterval(function() {document.getElementById("roll").innerHTML = trotatingSwirl;}, 30);
-        var p = setInterval(function() {document.getElementById("pitch").innerHTML = trotatingUp;}, 30);
+        var r = setInterval(function() {document.getElementById("roll").innerHTML = rotatingSwirlAngle;}, 30);
+        var p = setInterval(function() {document.getElementById("pitch").innerHTML = -1*rotatingUpAngle;}, 30);
         var yi = setInterval(function() {document.getElementById("yaw").innerHTML = rotatingLeftAngle;}, 30);
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
         var sh = setInterval(function() {document.getElementById("Shading").innerHTML = tshading;}, 30);

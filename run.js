@@ -7,10 +7,9 @@ var currentOrientation
 var rotatingLeft = 0
 var rotatingUp = 0
 var rotatingSwirl = 0
-var trotatingLeft = "None"
-var trotatingUp = "None"
-var trotatingSwirl = "None"
 var rotatingLeftAngle = 0
+var rotatingUpAngle = 0
+var rotatingSwirlAngle = 0
 var forward, backward = 0
 var trueVertFaces
 var patchLength = 100
@@ -58,6 +57,9 @@ function updateScene()
     if (over == 0){
         var speedRot = 1
         rotatingLeftAngle += speedRot * rotatingLeft
+        rotatingUpAngle += speedRot * rotatingUp
+        rotatingSwirlAngle += speedRot * rotatingSwirl
+        
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
         diff = mult(rotMat1, diff)
