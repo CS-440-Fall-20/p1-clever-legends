@@ -1,21 +1,3 @@
-function BufferFaces(elements){
-    iBuffer = gl.createBuffer() // Index / face buffer
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer)
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(elements), gl.STATIC_DRAW)
-}
-
-function BufferVertices(vertices){
-
-    vBuffer = gl.createBuffer()
-    gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer)
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices), gl.STATIC_DRAW)
-
-    vPosition = gl.getAttribLocation(program, "vPosition")
-    gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0)
-    gl.enableVertexAttribArray(vPosition)
-}
-
-
 function getHeight(x, z)
 {
 	return noise.perlin2(x/3, z/3)*6

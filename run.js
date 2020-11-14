@@ -1,6 +1,6 @@
 var canvas, gl
 var modelViewMatrix, modelViewMatrixLoc
-var terrainVerts, terrainFaces, mode, rowLength, terrainView
+var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
 var projectionMatrix, projectionMatrixLoc
 var eye, at, up, eyeOriginalPos, lastBufferPos
 var currentOrientation
@@ -18,6 +18,7 @@ var acc = 0.00
 var terrainNormal, faceNormal
 var speed = 0.02
 var shading
+var tshading
 var over = 0
 noise.seed(0)
 
@@ -47,8 +48,6 @@ async function newPatchVert(eyeOffset)
     }
 
 }
-
-
 function updateScene()
 {
     if (over == 0){
@@ -90,41 +89,12 @@ function updateScene()
 }
 
 
-function render()
-{
-    gl.clear(gl.COLOR_BUFFER_BIT || gl.DEPTH_BUFFER_BIT)
-    if(mode == 0)
-    {
-        gl.drawElements(gl.POINTS, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        gl.clearColor(0,0,0,1)
-        terrainView = "Dots"
-        
-    }
-    else if (mode == 1)
-    {
-        gl.drawElements(gl.LINE_STRIP, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        gl.clearColor(0,0,0,1)
-        terrainView = "Wireframe"
-    }
-    else if (mode == 2)
-    {
-        
-        gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        terrainView = "Filled"
-        gl.clearColor(173/255, 216/255, 230/255,1)
-            
-    }
-   
-    window.requestAnimationFrame(updateScene)
-}
-
-
 window.onload = function init() {
     eye = vec3(0,5, 5) //Position of Camera
     at = vec3(0, 5, 4)
     up = vec3(0, -1, 0)
     mode = 1
-
+    shading = 1
     WebGLSetup()
     if (over == 0){
     
@@ -133,7 +103,8 @@ window.onload = function init() {
         var eyeOffset = subtract(eye, eyeOriginalPos)
 
         get_patch(-patchLength, patchLength, -patchWidth, patchWidth, eyeOffset)
-        BufferVertices(terrainVerts)
+        chooseShading();
+        BufferVertices(terrainVerts, terrainColors)
         BufferFaces(terrainFaces)
 
         modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")

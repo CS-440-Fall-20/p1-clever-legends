@@ -8,51 +8,36 @@
         //attribute vec4 vNormal;
 		varying vec4 fragColor;
         uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix; 
-
+        uniform mat4 projectionMatrix;
+        //uniform vec4 ambientProduct, diffuseProduct, specularProduct;
+        //uniform vec4 lightPosition;
+        //uniform float shininess;
+        //uniform mat3 normalMatrix;
+        
+        
 		void main()
 		{
-            vec4 pos = vec4(vPosition.xyz, 1.0);
-               if (pos.y < 0.0){
-                   pos.y = 0.0;
-               }
             
+            vec4 pos = vec4(vPosition.xyz, 1.0);
+            if (pos.y < 0.0){
+                pos.y = 0.0;
+            }
             pos = modelViewMatrix * pos;
 			vec4 pos2 = vec4(pos.xy / (abs(pos.z) + 0.000001) * sign(pos.z), pos.z, 1.0);
-
             pos2 = projectionMatrix * pos2;
-
-            gl_Position = pos2;
             gl_PointSize = 2.5;
-            
-            if(vPosition.y < 0.0)
-                {
-                
-                fragColor = vec4(0,0,1,1);
-                }
-            else if(vPosition.y > 1.1 && vPosition.y < 1.9){
-                      fragColor = vec4(139/255,69/255,19/255,1);
-                }
-                else if(vPosition.y > 1.9){
-                    fragColor = vec4(1,1,1,1);
-                }
-                
-                else
-                {
-                    fragColor = vec4(0,1,0,1);
-                }
-            //fragColor = vec4(1,1,1,1);
+            gl_Position = pos2;
+            fragColor = vColor;
+
 		}
     </script>
 
     <script id="fragment-shader" type="x-shader/x-fragment">
         precision mediump float; 
         varying vec4 fragColor; 
-        //varying vec3 vNormal;
         void main() 
         
         { 
-            //vec3 adjustNormal = normalize(vNormal) * 0.5 + 0.5;
             gl_FragColor = fragColor; 
         }
     </script>
@@ -65,7 +50,7 @@
         var p = setInterval(function() {document.getElementById("pitch").innerHTML = trotatingUp;}, 30);
         var yi = setInterval(function() {document.getElementById("yaw").innerHTML = trotatingLeft;}, 30);
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
-        var sh = setInterval(function() {document.getElementById("Shading").innerHTML = shading;}, 30);
+        var sh = setInterval(function() {document.getElementById("Shading").innerHTML = tshading;}, 30);
     </script>
 
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
@@ -73,8 +58,10 @@
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
     <script type="text/javascript" src="perlin.js"></script>
     <script type="text/javascript" src="terrain.js"></script>
-    <script type="text/javascript" src="run.js"></script>
     <script type="text/javascript" src="eventhandler.js"></script>
+    <script type="text/javascript" src="buffer.js"></script>
+    <script type="text/javascript" src="TerrainShading.js"></script>
+    <script type="text/javascript" src="run.js"></script>
 
 </head>
 

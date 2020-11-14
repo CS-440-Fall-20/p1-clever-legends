@@ -63,9 +63,14 @@ function handleKeyDown(event)
         
     }
     
+    else if(event.keyCode == 67){ //Change Coloring Modes
+        
+        changeTerrainShadingView(shading);
+    }
+
     else if(event.keyCode == 86){ //Change Coloring Modes
         
-        changeTerrainView();
+        changeTerrainShadingView(mode);
     }
 
     else if (event.keyCode == 38) //up
@@ -198,7 +203,7 @@ function slowDown() {
     {speed += acc}
 }
 
-function changeTerrainView(){
+function changeTerrainShadingView(mode){
     if (mode == 0) 
         mode = 1;
     else if(mode == 1) 
@@ -207,13 +212,13 @@ function changeTerrainView(){
         mode = 0;
 }
 
-function changeShading(){
-
-}
-
 function exit(){
 
     over = 1
+    eye = vec3(0,0,0)
+    speed = 0
+    terrainView = "None"
+    shading = "None"
     var vertices = []                  
     BufferVertices(vertices);
     gl.clear(gl.COLOR_BUFFER_BIT);
