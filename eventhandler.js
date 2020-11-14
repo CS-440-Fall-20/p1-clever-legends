@@ -205,11 +205,23 @@ function slowDown() {
 
 function changeTerrainView(){
     if (mode == 0) 
+    {
         mode = 1;
+        terrainFaces = getPatchFaces(mode)
+        BufferFaces(terrainFaces)
+    }
     else if(mode == 1) 
-        mode = 2;    
+    {
+        mode = 2;
+        terrainFaces = getPatchFaces(mode)
+        BufferFaces(terrainFaces)
+    }
     else if(mode == 2) 
+    {
         mode = 0;
+        terrainFaces = getPatchFaces(mode)
+        BufferFaces(terrainFaces)
+    }
 }
 function changeShading(){
     if (shading == 0) 
