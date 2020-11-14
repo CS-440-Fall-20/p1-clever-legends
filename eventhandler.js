@@ -244,7 +244,7 @@ function handleKeyUp(event)
 
 
 function speedUp() {
-    if(speed < 3)
+    if(speed < 0.4)
     {speed += acc}
 
 }

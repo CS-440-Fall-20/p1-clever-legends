@@ -6,7 +6,7 @@ function getHeight(x, z)
 
 function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
 
-    var step = 1
+    var step = 0.5
     var terrainVerts = []
     var collength = 0
     for (var z = zmin; z <= zmax; z+=step){
@@ -47,7 +47,7 @@ function getPatchFaces(mode)
         }
         for(var row = 1; row < collength; row++)
         {
-            for(var col = 0; col < collength - 1; col++)
+            for(var col = 0; col < rowLength - 1; col++)
             {
                 var v1 = row * rowLength + col
                 var v2 = (row - 1) * rowLength + col + 1

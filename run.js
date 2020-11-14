@@ -13,8 +13,8 @@ var rotatingUpAngle = 0
 var rotatingSwirlAngle = 0
 var forward, backward = 0
 var trueVertFaces
-var patchLength = 100
-var patchWidth = 100
+var patchLength = 60
+var patchWidth = 60
 var acc = 0.00
 var terrainNormal, faceNormal
 var speed = 0.02
@@ -63,6 +63,28 @@ function updateScene()
         rotatingUpAngle += speedRot * rotatingUp
         rotatingSwirlAngle += speedRot * rotatingSwirl
         
+        if(rotatingLeftAngle > 90)
+        {
+            rotatingLeftAngle = 90
+            rotatingLeft = 0
+        }
+        else if(rotatingLeftAngle < -90)
+        {
+            rotatingLeftAngle = -90
+            rotatingLeft = 0
+        }
+        
+        if(rotatingUpAngle > 90)
+        {
+            rotatingUpAngle = 90
+            rotatingUp = 0
+        }
+        else if(rotatingUpAngle < -90)
+        {
+            rotatingUpAngle = -90
+            rotatingUp = 0
+        }
+
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
         diff = mult(rotMat1, diff)

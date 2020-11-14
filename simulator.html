@@ -31,9 +31,9 @@
             else
             {
                 pos2.xy = pos2.xy / pos2.z;
+                pos2 = projectionMatrix * pos2;
             }
             
-            pos2 = projectionMatrix * pos2;
             
             gl_PointSize = 2.5;
             gl_Position = pos2;
