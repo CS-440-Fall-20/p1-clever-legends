@@ -14,11 +14,11 @@ function BufferVertices(vertices, colors){
     gl.vertexAttribPointer(vPosition, 3, gl.FLOAT, false, 0, 0)
     gl.enableVertexAttribArray(vPosition)
 
-    var color_buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW);
+    // var color_buffer = gl.createBuffer();
+    // gl.bindBuffer(gl.ARRAY_BUFFER, color_buffer);
+    // gl.bufferData(gl.ARRAY_BUFFER, flatten(colors), gl.STATIC_DRAW);
 
-    var vColor = gl.getAttribLocation(program, "vColor");
-    gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vColor);
+    // var vColor = gl.getAttribLocation(program, "vColor");
+    // gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
+    // gl.enableVertexAttribArray(vColor);
 }

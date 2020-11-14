@@ -26,7 +26,7 @@ function render()
         terrainView = "Filled"
         
     }
-   
+    
     window.requestAnimationFrame(updateScene)
 }
 

@@ -32,10 +32,23 @@
             {
                 pos2.xy = pos2.xy / pos2.z;
             }
+            
             pos2 = projectionMatrix * pos2;
+            
             gl_PointSize = 2.5;
             gl_Position = pos2;
-            fragColor = vColor;
+
+            if (vPosition.y < 0.05)
+            fragColor = vec4(0,0,1,1);
+
+            else if (vPosition.y > 2.0)
+            fragColor = vec4(1,1,1,1);
+            
+            else if (vPosition.y < 2.0 && vPosition.y > 1.8)
+            fragColor = vec4(128/255, 57/255, 30/255, 1);
+            
+            else 
+            fragColor = vec4(0,1,0,1);
 
 		}
     </script>
@@ -64,6 +77,7 @@
         var s = setInterval(function() {document.getElementById("speed").innerHTML = Math.round(speed*1000)/1000;}, 30);
         var a = setInterval(function() {document.getElementById("acc").innerHTML = acc;}, 30);
         var al = setInterval(function() {document.getElementById("alt").innerHTML = Math.round(eye[1]*1000)/1000;}, 30);
+        var al = setInterval(function() {document.getElementById("dir").innerHTML = direction;}, 30);
         var r = setInterval(function() {document.getElementById("roll").innerHTML = rotatingSwirlAngle;}, 30);
         var p = setInterval(function() {document.getElementById("pitch").innerHTML = -1*rotatingUpAngle;}, 30);
         var yi = setInterval(function() {document.getElementById("yaw").innerHTML = rotatingLeftAngle;}, 30);
@@ -81,13 +95,14 @@
     </canvas>
 
     
-    <div style="color: white; font-family: 'Courier New', Courier, monospace; position: absolute; top: 47px; left: 820px;">
+    <div style="color: white; font-family: 'Courier New', Courier, monospace; position: absolute; top: 55px; left: 820px; font-size:x-small;">
 
         
     <p>
         <b>Speed:</b>             <a><a id="speed"></a>  </a>  <br>
         <a>  </a><b>Acceleration:</b>      <a id="acc"></a> <br>
         <a>  </a><b>Altitude:</b>           <a id="alt"></a> <br>
+        <a>  </a><b>Directon:</b>           <a id="dir"></a> <br>
         <a>  </a><b>Roll:</b>          <a id="roll"></a> <br>
         <a>  </a><b>Pitch:</b>             <a id="pitch"></a> <br>
         <a>  </a><b>Yaw:</b>               <a id="yaw"></a><br> <br>

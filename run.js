@@ -20,6 +20,7 @@ var speed = 0.02
 var shading
 var tshading
 var over = 0
+var direction = "North"
 noise.seed(0)
 
 
@@ -46,8 +47,8 @@ async function newPatchVert(eyeOffset)
 {
     if (over == 0){
         terrainVerts = getPatchVert(-patchLength, patchLength, -patchLength, patchLength, eyeOffset)
-        chooseShading()
-        getPatchNormal()
+        // chooseShading()
+        // getPatchNormal()
         BufferVertices(terrainVerts, terrainColors)
     }
 
@@ -56,6 +57,7 @@ function updateScene()
 {
     if (over == 0){
         var speedRot = 1
+
         rotatingLeftAngle += speedRot * rotatingLeft
         rotatingUpAngle += speedRot * rotatingUp
         rotatingSwirlAngle += speedRot * rotatingSwirl
@@ -79,7 +81,6 @@ function updateScene()
         eye = add(eye, scale(speed, diff))
         at = add(at, scale(speed, diff))
 
-
         modelViewMatrix = lookAt(eye, at, up)
         gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
 
@@ -91,6 +92,20 @@ function updateScene()
             lastBufferPos = eye.slice(0, 3)
         }
 
+        if(rotatingLeftAngle == 0)
+            direction = "North"
+        else if(rotatingLeftAngle > 0 && rotatingLeftAngle < 90)
+            direction = "North East"
+        
+        else if(rotatingLeftAngle > 90)
+            direction = "East"
+        
+        else if(rotatingLeftAngle < 0 && rotatingLeftAngle > -90)
+            direction = "North West"
+        
+        else if(rotatingLeftAngle < - 90)
+            direction = "West"
+        
         render()
     }
     
@@ -109,9 +124,9 @@ window.onload = function init() {
         eyeOriginalPos = eye.slice(0, 3)
         lastBufferPos = eye.slice(0, 3)
         var eyeOffset = subtract(eye, eyeOriginalPos)
-
+        terrainColors = []
         get_patch(-patchLength, patchLength, -patchWidth, patchWidth, eyeOffset)
-        chooseShading();
+        // chooseShading();
         BufferVertices(terrainVerts, terrainColors)
         BufferFaces(terrainFaces)
 

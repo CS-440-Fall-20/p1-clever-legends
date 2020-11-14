@@ -1,6 +1,6 @@
 function getHeight(x, z)
 {
-	return noise.perlin2(x/3, z/3)*6
+	return noise.perlin2(-x/3, -z/3)*6
 }
 
 
