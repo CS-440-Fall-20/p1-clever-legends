@@ -10,6 +10,7 @@ var rotatingSwirl = 0
 var trotatingLeft = "None"
 var trotatingUp = "None"
 var trotatingSwirl = "None"
+var rotatingLeftAngle = 0
 var forward, backward = 0
 var trueVertFaces
 var patchLength = 100
@@ -56,6 +57,7 @@ function updateScene()
 {
     if (over == 0){
         var speedRot = 1
+        rotatingLeftAngle += speedRot * rotatingLeft
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
         diff = mult(rotMat1, diff)
@@ -117,7 +119,7 @@ window.onload = function init() {
         modelViewMatrix = lookAt(eye, at, up)
         currentOrientation = rotateX(0)
 
-        projectionMatrix = ortho(-1, 1, -1, 1, 4, 40)
+        projectionMatrix = ortho(-1, 1, -1, 1, 0.01, 40)
 
         gl.uniformMatrix4fv(modelViewMatrixLoc, false, flatten(modelViewMatrix))
         gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))

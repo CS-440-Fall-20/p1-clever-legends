@@ -23,7 +23,15 @@
                 pos.y = 0.0;
             }
             pos = modelViewMatrix * pos;
-			vec4 pos2 = vec4(pos.xy / (abs(pos.z) + 0.000001) * sign(pos.z), pos.z, 1.0);
+			vec4 pos2 = pos;
+            if(pos2.z >= 0.0)
+            {
+                pos2.z = 10000000000.0;
+            }
+            else
+            {
+                pos2.xy = pos2.xy / pos2.z;
+            }
             pos2 = projectionMatrix * pos2;
             gl_PointSize = 2.5;
             gl_Position = pos2;
@@ -58,7 +66,7 @@
         var al = setInterval(function() {document.getElementById("alt").innerHTML = Math.round(eye[1]*1000)/1000;}, 30);
         var r = setInterval(function() {document.getElementById("roll").innerHTML = trotatingSwirl;}, 30);
         var p = setInterval(function() {document.getElementById("pitch").innerHTML = trotatingUp;}, 30);
-        var yi = setInterval(function() {document.getElementById("yaw").innerHTML = trotatingLeft;}, 30);
+        var yi = setInterval(function() {document.getElementById("yaw").innerHTML = rotatingLeftAngle;}, 30);
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
         var sh = setInterval(function() {document.getElementById("Shading").innerHTML = tshading;}, 30);
     </script>
