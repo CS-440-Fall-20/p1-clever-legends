@@ -1,3 +1,5 @@
+shiftPressed = false
+
 function handleKeyDown(event)
 {
     if(event.keyCode == 87) //w
@@ -78,6 +80,41 @@ function handleKeyDown(event)
         slowDown();    
         
     }
+
+
+    else if (event.keyCode == 16)
+    {
+        shiftPressed = true
+        console.log("Shift Pressed")
+    }
+
+    else if (shiftPressed)
+    {
+        if (event.keyCode == 49)
+        {
+            console.log("Shift and 1")
+        }
+        else if (event.keyCode == 50)
+        {
+            console.log("Shift and 2")
+        }
+        else if (event.keyCode == 51)
+        {
+            console.log("Shift and 3")
+        }
+        else if (event.keyCode == 52)
+        {
+            console.log("Shift and 4")
+        }
+        else if (event.keyCode == 53)
+        {
+            console.log("Shift and 5")
+        }
+        else if (event.keyCode == 54)
+        {
+            console.log("Shift and 6")
+        }
+    }
 }
 
 
@@ -143,6 +180,11 @@ function handleKeyUp(event)
         acc = 0
   
         
+    }
+
+    else if (event.keyCode == 16)
+    {
+        shiftPressed = false
     }
     
 }
