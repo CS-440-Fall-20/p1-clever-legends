@@ -12,11 +12,11 @@ var rotatingUpAngle = 0
 var rotatingSwirlAngle = 0
 var forward, backward = 0
 var trueVertFaces
-var patchLength = 100
-var patchWidth = 100
+var patchLength = 1.6
+var patchWidth = 1.6
 var acc = 0.00
 var terrainNormal, faceNormal
-var speed = 0.02
+var speed = 0.0
 var shading
 var tshading
 var over = 0
