@@ -46,7 +46,9 @@ async function newPatchVert(eyeOffset)
 {
     if (over == 0){
         terrainVerts = getPatchVert(-patchLength, patchLength, -patchLength, patchLength, eyeOffset)
-        BufferVertices(terrainVerts)
+        chooseShading()
+        getPatchNormal()
+        BufferVertices(terrainVerts, terrainColors)
     }
 
 }

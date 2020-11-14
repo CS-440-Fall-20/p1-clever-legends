@@ -42,6 +42,16 @@
         }
     </script>
 
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
+    <script type="text/javascript" src="perlin.js"></script>
+    <script type="text/javascript" src="terrain.js"></script>
+    <script type="text/javascript" src="eventhandler.js"></script>
+    <script type="text/javascript" src="buffer.js"></script>
+    <script type="text/javascript" src="TerrainShading.js"></script>
+    <script type="text/javascript" src="run.js"></script>
+
     <script>
         var s = setInterval(function() {document.getElementById("speed").innerHTML = Math.round(speed*1000)/1000;}, 30);
         var a = setInterval(function() {document.getElementById("acc").innerHTML = acc;}, 30);
@@ -52,16 +62,6 @@
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
         var sh = setInterval(function() {document.getElementById("Shading").innerHTML = tshading;}, 30);
     </script>
-
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
-    <script type="text/javascript" src="perlin.js"></script>
-    <script type="text/javascript" src="terrain.js"></script>
-    <script type="text/javascript" src="eventhandler.js"></script>
-    <script type="text/javascript" src="buffer.js"></script>
-    <script type="text/javascript" src="TerrainShading.js"></script>
-    <script type="text/javascript" src="run.js"></script>
 
 </head>
 
