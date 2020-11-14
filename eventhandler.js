@@ -80,8 +80,6 @@ function handleKeyDown(event)
     }
 }
 
-
-
 function handleKeyUp(event)
 {
     if(event.keyCode == 87) //w
@@ -150,42 +148,22 @@ function handleKeyUp(event)
 
 function speedUp() {
     if(speed < 3)
-    {
-        speed += acc
-
-    }
+    {speed += acc}
 
 }
 function slowDown() {
-
     if(speed > 0.00)
-    {
-        
-        speed += acc
-
-
-    }
-    
-    
+    {speed += acc}
 }
 
 function changeTerrainView(){
-    if (mode == 0){
+    if (mode == 0) 
         mode = 1;
-        
-    }
-    
-    else if(mode == 1){
-        mode = 2;
-        
-    }
-    
-    else if(mode == 2){
+    else if(mode == 1) 
+        mode = 2;    
+    else if(mode == 2) 
         mode = 0;
-        
-
-    }
-}  
+}
 
 function changeShading(){
 

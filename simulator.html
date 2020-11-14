@@ -57,20 +57,6 @@
         }
     </script>
 
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
-    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
-    <script type="text/javascript" src="perlin.js"></script>
-    <script type="text/javascript" src="terrain.js"></script>
-    <script type="text/javascript" src="run.js"></script>
-    <script type="text/javascript" src="eventhandler.js"></script>
-</head>
-<h2 style="color: black; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h2  >
-<body style="background-color:white; width: auto; height:auto;">
-    <canvas id="gl-canvas" width="800px" height="500px" tabindex="35">
-        Oops ... your browser doesn't support the HTML5 canvas element
-    </canvas>
-
     <script>
         var s = setInterval(function() {document.getElementById("speed").innerHTML = Math.round(speed*1000)/1000;}, 30);
         var a = setInterval(function() {document.getElementById("acc").innerHTML = acc;}, 30);
@@ -81,8 +67,26 @@
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
         var sh = setInterval(function() {document.getElementById("Shading").innerHTML = shading;}, 30);
     </script>
+
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
+    <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
+    <script type="text/javascript" src="perlin.js"></script>
+    <script type="text/javascript" src="terrain.js"></script>
+    <script type="text/javascript" src="run.js"></script>
+    <script type="text/javascript" src="eventhandler.js"></script>
+
+</head>
+
+
+<h2 style="color: white; font-family: 'Courier New', Courier, monospace;">Flight Simulator</h2  >
+<body style="background-color:black; width: auto; height:auto;">
+    <canvas id="gl-canvas" width="800px" height="500px" tabindex="35">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+
     
-    <div style="color: black; font-family: 'Courier New', Courier, monospace; position: absolute; top: 47px; left: 820px;">
+    <div style="color: white; font-family: 'Courier New', Courier, monospace; position: absolute; top: 47px; left: 820px;">
 
         
     <p>
@@ -93,7 +97,7 @@
         <a>  </a><b>Pitch:</b>             <a id="pitch"></a> <br>
         <a>  </a><b>Yaw:</b>               <a id="yaw"></a><br> <br>
         <a>  </a><b>Terrain View:</b>      <a id="tv"></a> <br>
-        <a>  </a><b>Shading:</b>           <a id="Shading"></a>
+        <a>  </a><b>Shading:</b>           <a id="Shading"></   a>
     </p>
 
     </div>
