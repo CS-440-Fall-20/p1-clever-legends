@@ -2,8 +2,8 @@
 var canvas, gl
 var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
-var toggleShading = 1.0;
-var toggleShadingL;
+var toggleShading = 1.0
+var toggleShadingL
 var shading = ["Flat", "Smooth", "Phong"]
 var tshading = "Smooth"
 var projectionMatrix, projectionMatrixLoc
@@ -27,17 +27,19 @@ var over = false
 var direction = "North"
 var cameraPositionL;
 
-var Ka = 1.0;
-var Kd = 1.0;
-var Ks = 1.0;
-var shininessVal = 90;
+var Ka = 1.0
+var Kd = 1.0
+var Ks = 1.0
+var shininessVal = 90
 
-var ambientColor = vec3(0.0, 0.0, 0.0);
-var diffuseColor = vec3(1.0, 0.8, 1.0);
-var specularColor = vec3(1.0, 1.0, 1.0);
-var lightPos = vec3(0.0, 0.0, 10.0);
+var ambientColor = vec3(0.0, 0.0, 0.0)
+var diffuseColor = vec3(1.0, 0.8, 1.0)
+var specularColor = vec3(1.0, 1.0, 1.0)
+var lightPos = vec3(0.0, 0.0, 10.0)
 
-var cameraPosition;
+var cameraPosition
+var flatVert
+var flatNormal
 
 var shiftPressed = false
 var projDecrement = 0.05

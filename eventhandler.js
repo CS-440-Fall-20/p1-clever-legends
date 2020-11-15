@@ -2,11 +2,36 @@
 function handleKeyDown(event)
 {
 
+
     if(event.keyCode == 67) //c
     {
       toggleShading = (toggleShading + 1) % 3
       tshading = shading[toggleShading]
       gl.uniform1fv(toggleShadingL, [toggleShading])
+      flatVert = []
+      flatNormal = []
+      for (var i = 0; i < trueVertFaces.length; i++)
+      {
+        var vertIndex = trueVertFaces[i]
+        flatVert.push(terrainVerts[vertIndex])
+        flatNormal.push(terrainNormal[vertIndex])
+      }
+      nBuffer2 = gl.createBuffer()
+      gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer2)
+      gl.bufferData(gl.ARRAY_BUFFER, flatten(flatNormal), gl.STATIC_DRAW)
+
+      vNormal2 = gl.getAttribLocation(program, "vNormal2")
+      gl.vertexAttribPointer(vNormal2, 3, gl.FLOAT, false, 0, 0)
+      gl.enableVertexAttribArray(vNormal2)
+
+      vPosition2 = gl.createBuffer()
+      gl.bindBuffer(gl.ARRAY_BUFFER, vPosition2)
+      gl.bufferData(gl.ARRAY_BUFFER, flatten(flatVert), gl.STATIC_DRAW)
+
+      vPosition2 = gl.getAttribLocation(program, "vPosition2")
+      gl.vertexAttribPointer(vPosition2, 3, gl.FLOAT, false, 0, 0)
+      gl.enableVertexAttribArray(vPosition2)
+
 
 
     }
