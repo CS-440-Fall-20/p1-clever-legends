@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 var canvas, gl
 var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
@@ -22,4 +24,19 @@ var shading
 var tshading
 var over = false
 var direction = "North"
+var cameraPositionL;
+
+var Ka = 1.0;
+var Kd = 1.0;
+var Ks = 1.0;
+var shininessVal = 90;
+
+var ambientColor = vec3(0.0, 0.0, 0.0);
+var diffuseColor = vec3(1.0, 0.8, 1.0);
+var specularColor = vec3(1.0, 1.0, 1.0);
+var lightPos = vec3(0.0, 0.0, 10.0);
+
+var cameraPosition;
+
+
 noise.seed(0)

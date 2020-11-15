@@ -1,3 +1,5 @@
+
+
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
     gl = WebGLUtils.setupWebGL(canvas)
@@ -23,6 +25,8 @@ async function newPatchVert(eyeOffset)
         // chooseShading()
         // getPatchNormal()
         BufferVertices(terrainVerts, terrainColors)
+        terrainNormal = getPatchNormal()
+        BufferNormal(terrainNormal)
     }
 
 }
@@ -40,7 +44,7 @@ function updateScene()
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
         diff = mult(rotMat1, diff)
-        
+
         var perp = cross(diff.slice(0,3), up)
 
         var rotMat2 = rotate(rotatingUp * speedRot, perp)
@@ -72,7 +76,7 @@ function updateScene()
 
         render()
     }
-    
+
 }
 
 
@@ -86,12 +90,47 @@ window.onload = function init() {
     top1 = ogTop1
     near = ogNear
     far = ogFar
-    mode = 1
+    mode = 2
     shading = 1
     WebGLSetup()
     if (!over){
     
         eyeOriginalPos = eye.slice(0, 3)
+
+        cameraPosition = eye;
+        cameraPositionL = gl.getUniformLocation(program, "cameraPosition")
+
+        gl.uniform3fv(cameraPositionL, flatten([eye]))
+
+        var KaL = gl.getUniformLocation(program, "Ka")
+        gl.uniform1fv(KaL, [Ka])
+
+        var KdL = gl.getUniformLocation(program, "Kd")
+        gl.uniform1fv(KdL, [Kd])
+
+        var KsL = gl.getUniformLocation(program, "Ks")
+        gl.uniform1fv(KsL, [Ks])
+
+        var shininessValL = gl.getUniformLocation(program, "shininessVal")
+        gl.uniform1f(shininessValL, shininessVal)
+
+        ambientColorL = gl.getUniformLocation(program, "ambientColor")
+        gl.uniform3fv(ambientColorL, flatten(cameraPosition))
+
+        diffuseColorL = gl.getUniformLocation(program, "diffuseColor")
+        gl.uniform3fv(diffuseColorL, flatten(diffuseColor))
+
+        specularColorL = gl.getUniformLocation(program, "specularColor")
+        gl.uniform3fv(specularColorL, flatten(specularColor))
+
+        lightPosL = gl.getUniformLocation(program, "lightPos")
+        gl.uniform3fv(lightPosL, flatten(lightPos))
+
+
+
+
+
+
         lastBufferPos = eye.slice(0, 3)
         var eyeOffset = subtract(eye, eyeOriginalPos)
         terrainColors = []
@@ -99,6 +138,7 @@ window.onload = function init() {
         // chooseShading();
         BufferVertices(terrainVerts, terrainColors)
         BufferFaces(terrainFaces)
+        //BufferNormal(terrainNormal)
 
         modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
         projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
@@ -112,10 +152,13 @@ window.onload = function init() {
         gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
 
         terrainNormal = getPatchNormal()
+        BufferNormal(terrainNormal)
+        // console.log(terrainNormal.length)
+        // console.log(terrainVerts.length)
+        // console.log(terrainNormal[0].length)
+
 
         render()
     }
 
 }
-
-

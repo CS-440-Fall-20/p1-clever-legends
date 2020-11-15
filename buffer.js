@@ -22,3 +22,14 @@ function BufferVertices(vertices, colors){
     // gl.vertexAttribPointer(vColor, 4, gl.FLOAT, false, 0, 0);
     // gl.enableVertexAttribArray(vColor);
 }
+function BufferNormal(normal){
+
+    nBuffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer)
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(normal), gl.STATIC_DRAW)
+
+    vNormal = gl.getAttribLocation(program, "vNormal")
+    gl.vertexAttribPointer(vNormal, 3, gl.FLOAT, false, 0, 0)
+    gl.enableVertexAttribArray(vNormal)
+
+}
