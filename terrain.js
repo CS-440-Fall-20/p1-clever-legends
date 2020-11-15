@@ -124,10 +124,10 @@ function getPatchNormal(){
         integer[i] = 0
     }
     
-    for(var i = 0; i < terrainFaces.length; i++)
+    for(var i = 0; i < trueVertFaces.length; i++)
     {
         var indexFaceNormal = Math.floor(i/3)
-        var elementTerrainFace = terrainFaces[i]
+        var elementTerrainFace = trueVertFaces[i]
         var elementFaceNormal = faceNormal[indexFaceNormal]
 
         terrainNormal[elementTerrainFace] = add(terrainNormal[elementTerrainFace], elementFaceNormal)
