@@ -84,11 +84,12 @@
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/MV.js"></script>
+    <script type="text/javascript" src="variables.js"></script> 
     <script type="text/javascript" src="perlin.js"></script>
-    <script type="text/javascript" src="terrain.js"></script>
-    <script type="text/javascript" src="eventhandler.js"></script>
     <script type="text/javascript" src="buffer.js"></script>
+    <script type="text/javascript" src="terrain.js"></script>
     <script type="text/javascript" src="TerrainShading.js"></script>
+    <script type="text/javascript" src="eventhandler.js"></script>
     <script type="text/javascript" src="run.js"></script>
 
     <script>
@@ -101,6 +102,7 @@
         var yi = setInterval(function() {document.getElementById("yaw").innerHTML = rotatingLeftAngle;}, 30);
         var tv = setInterval(function() {document.getElementById("tv").innerHTML = terrainView;}, 30);
         var sh = setInterval(function() {document.getElementById("Shading").innerHTML = tshading;}, 30);
+        var ex = setInterval(function() {document.getElementById("exit").innerHTML = over;}, 30);
     </script>
 
 </head>
@@ -115,8 +117,8 @@
 
     <div style="color: white; font-family: 'Courier New', Courier, monospace; position: absolute; top: 55px; left: 820px; font-size:x-small;">
 
-
-    <p>
+    <b><p>Flight Sim Info</p></b>
+    <p style="margin-left: 10px;">
         <b>Speed:</b>             <a><a id="speed"></a>  </a>  <br>
         <a>  </a><b>Acceleration:</b>      <a id="acc"></a> <br>
         <a>  </a><b>Altitude:</b>           <a id="alt"></a> <br>
@@ -125,9 +127,44 @@
         <a>  </a><b>Pitch:</b>             <a id="pitch"></a> <br>
         <a>  </a><b>Yaw:</b>               <a id="yaw"></a><br> <br>
         <a>  </a><b>Terrain View:</b>      <a id="tv"></a> <br>
-        <a>  </a><b>Shading:</b>           <a id="Shading"></   a>
+        <a>  </a><b>Shading:</b>           <a id="Shading"></a><br>
+        <a>  </a><b>Exit Status:</b>           <a id="exit"></a>
     </p>
 
+    </div>
+    <div style="color: white; font-family: 'Courier New', Courier, monospace; position: absolute; top: 210px; left: 820px; font-size:x-small;">
+
+        
+    <b><p>Instructions</p></b>
+    <b><p style="text-indent: 10px">Veiwing Volume</p></b>
+    <p  style="margin-left: 10px;">
+        Shift+1 = Vary Left<br>
+        Shift+2 = Vary Right<br>
+        Shift+3 = Vary Top<br>
+        Shift+4 = Vary Bottom<br>
+        Shift+5 = Vary Near<br>
+        Shift+6 = Vary Far<br>
+        C = Change Shading Technique<br>
+        V = Change Terrain View   
+    </p>
+    <b><p style="text-indent: 10px">Flight Controls</p></b>
+    <p  style="margin-left: 10px;">
+        W = Pitch Up <br>
+        S = Pitch Down<br>
+        A = Yaw Left<br>
+        D = Yaw Right<br>
+        Q = Roll Left<br>
+        E = Roll Right<br>
+        Up = Increase Speed<br>
+        Down = Decrease Speed
+    </p> 
+    </p>
+    <b><p>Additonal Features</p></b>
+    <p  style="margin-left: 10px;">
+        - Perlin Noise used to smooth mountains<br>
+        - Water bodies flattened for a more realistic look
+    </p> 
+    </p>
     </div>
 
 

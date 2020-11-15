@@ -1,45 +1,5 @@
-var canvas, gl
-var modelViewMatrix, modelViewMatrixLoc
-var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
-var projectionMatrix, projectionMatrixLoc
-var eye, at, up, eyeOriginalPos, lastBufferPos
-var left, right, bottom, top1, near, far
-var currentOrientation
-var rotatingLeft = 0
-var rotatingUp = 0
-var rotatingSwirl = 0
-var rotatingLeftAngle = 0
-var rotatingUpAngle = 0
-var rotatingSwirlAngle = 0
-var forward, backward = 0
-var trueVertFaces
-var patchLength = 60
-var patchWidth = 60
-var acc = 0.00
-var terrainNormal, faceNormal
-var speed = 0.02
-var shading
-var tshading
-var over = 0
-var direction = "North"
-var cameraPositionL;
-
-var Ka = 1.0;
-var Kd = 1.0;
-var Ks = 1.0;
-var shininessVal = 90;
-
-var ambientColor = vec3(0.0, 0.0, 0.0);
-var diffuseColor = vec3(1.0, 0.8, 1.0);
-var specularColor = vec3(1.0, 1.0, 1.0);
-var lightPos = vec3(0.0, 0.0, 10.0);
-
-var cameraPosition;
-
 
 noise.seed(0)
-
-
 
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
@@ -61,7 +21,7 @@ function WebGLSetup(){
 
 async function newPatchVert(eyeOffset)
 {
-    if (over == 0){
+    if (!over){
         terrainVerts = getPatchVert(-patchLength, patchLength, -patchLength, patchLength, eyeOffset)
         // chooseShading()
         // getPatchNormal()
@@ -73,34 +33,14 @@ async function newPatchVert(eyeOffset)
 }
 function updateScene()
 {
-    if (over == 0){
-        var speedRot = 1
-
+    if (!over){
+        var speedRot = 0.5
         rotatingLeftAngle += speedRot * rotatingLeft
         rotatingUpAngle += speedRot * rotatingUp
         rotatingSwirlAngle += speedRot * rotatingSwirl
 
-        if(rotatingLeftAngle > 90)
-        {
-            rotatingLeftAngle = 90
-            rotatingLeft = 0
-        }
-        else if(rotatingLeftAngle < -90)
-        {
-            rotatingLeftAngle = -90
-            rotatingLeft = 0
-        }
-
-        if(rotatingUpAngle > 90)
-        {
-            rotatingUpAngle = 90
-            rotatingUp = 0
-        }
-        else if(rotatingUpAngle < -90)
-        {
-            rotatingUpAngle = -90
-            rotatingUp = 0
-        }
+        movementConstraints()
+        directionChange()
 
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
@@ -135,20 +75,6 @@ function updateScene()
             lastBufferPos = eye.slice(0, 3)
         }
 
-        if(rotatingLeftAngle == 0)
-            direction = "North"
-        else if(rotatingLeftAngle > 0 && rotatingLeftAngle < 90)
-            direction = "North East"
-
-        else if(rotatingLeftAngle > 90)
-            direction = "East"
-
-        else if(rotatingLeftAngle < 0 && rotatingLeftAngle > -90)
-            direction = "North West"
-
-        else if(rotatingLeftAngle < - 90)
-            direction = "West"
-
         render()
     }
 
@@ -168,8 +94,8 @@ window.onload = function init() {
     mode = 2
     shading = 1
     WebGLSetup()
-    if (over == 0){
-
+    if (!over){
+    
         eyeOriginalPos = eye.slice(0, 3)
 
         cameraPosition = eye;
