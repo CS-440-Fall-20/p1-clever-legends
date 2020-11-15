@@ -58,7 +58,12 @@ function updateScene()
 
         at = add(eye, diff)
 
-        eye = add(eye, scale(speed, diff))
+        if (add(eye, scale(speed, diff))[1] < 4 || add(eye, scale(speed, diff))[1] > 15){
+            eye = eye
+        }
+        else
+            eye = add(eye, scale(speed, diff))
+
         at = add(at, scale(speed, diff))
 
         modelViewMatrix = lookAt(eye, at, up)

@@ -17,6 +17,8 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
             xTemp = xTemp - xTemp % step
             zTemp = zTemp - zTemp % step
             var y = getHeight(xTemp, zTemp)
+            if (y < 0.2)
+            y = 0
             terrainVerts.push(vec3(xTemp, y, zTemp))
         }
         collength += 1

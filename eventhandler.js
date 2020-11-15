@@ -337,14 +337,14 @@ function movementConstraints(){
             rotatingLeft = 0
         }
 
-        if(rotatingUpAngle > 90)
+        if(rotatingUpAngle > 35.5)
         {
-            rotatingUpAngle = 90
+            rotatingUpAngle = 35.5
             rotatingUp = 0
         }
-        else if(rotatingUpAngle < -90)
+        else if(rotatingUpAngle < -35.5)
         {
-            rotatingUpAngle = -90
+            rotatingUpAngle = -35.5
             rotatingUp = 0
         }
 }
