@@ -66,6 +66,8 @@ async function newPatchVert(eyeOffset)
         // chooseShading()
         // getPatchNormal()
         BufferVertices(terrainVerts, terrainColors)
+        terrainNormal = getPatchNormal()
+        BufferNormal(terrainNormal)
     }
 
 }
@@ -163,7 +165,7 @@ window.onload = function init() {
     top1 = ogTop1
     near = ogNear
     far = ogFar
-    mode = 1
+    mode = 2
     shading = 1
     WebGLSetup()
     if (over == 0){
@@ -226,9 +228,9 @@ window.onload = function init() {
 
         terrainNormal = getPatchNormal()
         BufferNormal(terrainNormal)
-        console.log(terrainNormal.length)
-        console.log(terrainVerts.length)
-        console.log(terrainNormal[0].length)
+        // console.log(terrainNormal.length)
+        // console.log(terrainVerts.length)
+        // console.log(terrainNormal[0].length)
 
 
         render()
