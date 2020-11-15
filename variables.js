@@ -36,4 +36,4 @@ var specularColor = vec3(1.0, 1.0, 1.0);
 var lightPos = vec3(0.0, 0.0, 10.0);
 
 var cameraPosition;
-noise.seed(0)
+

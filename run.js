@@ -1,4 +1,6 @@
 
+noise.seed(0)
+
 function WebGLSetup(){
     canvas = document.getElementById("gl-canvas")
     gl = WebGLUtils.setupWebGL(canvas)
