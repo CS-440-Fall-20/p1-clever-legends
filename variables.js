@@ -2,6 +2,8 @@
 var canvas, gl
 var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
+var toggleShading = 1.0;
+var toggleShadingL;
 var projectionMatrix, projectionMatrixLoc
 var eye, at, up, eyeOriginalPos, lastBufferPos
 var left, right, bottom, top1, near, far
@@ -36,4 +38,3 @@ var specularColor = vec3(1.0, 1.0, 1.0);
 var lightPos = vec3(0.0, 0.0, 10.0);
 
 var cameraPosition;
-

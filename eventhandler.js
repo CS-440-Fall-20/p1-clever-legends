@@ -11,14 +11,23 @@ var ogFar = 40
 
 function handleKeyDown(event)
 {
-    if(event.keyCode == 87) //w
+
+    if(event.keyCode == 67) //c
+    {
+      toggleShading = (toggleShading + 1) % 3
+      gl.uniform1fv(toggleShadingL, [toggleShading])
+
+
+    }
+
+    else if(event.keyCode == 87) //w
     {
         if(rotatingUp == 0)
         {
             rotatingUp = -1
 
         }
-        
+
     }
     else if(event.keyCode == 83) //s
     {
@@ -27,7 +36,7 @@ function handleKeyDown(event)
             rotatingUp = 1
 
         }
- 
+
     }
     else if(event.keyCode == 81) //q
     {
@@ -44,7 +53,7 @@ function handleKeyDown(event)
             rotatingSwirl = 1
 
         }
-   
+
     }
     else if(event.keyCode == 65) //a
     {
@@ -62,23 +71,23 @@ function handleKeyDown(event)
             rotatingLeft = 1
 
         }
-     
+
     }
 
-    
+
     else if(event.keyCode == 27){ //Esc
 
         exit();
-        
+
     }
-    
+
     else if(event.keyCode == 67){ //Change Coloring Modes
-        
+
         changeShading();
     }
 
     else if(event.keyCode == 86){ //Change Coloring Modes
-        
+
         changeTerrainView();
     }
 
@@ -87,12 +96,12 @@ function handleKeyDown(event)
         acc = 0.02
         speedUp();
     }
-    
+
     else if (event.keyCode == 40) //down
     {
         acc = -0.02
-        slowDown();    
-        
+        slowDown();
+
     }
 
 
@@ -227,19 +236,19 @@ function handleKeyUp(event)
         acc = 0
 
     }
-    
+
     else if (event.keyCode == 40) //down
     {
         acc = 0
-  
-        
+
+
     }
 
     else if (event.keyCode == 16)
     {
         shiftPressed = false
     }
-    
+
 }
 
 
@@ -254,19 +263,19 @@ function slowDown() {
 }
 
 function changeTerrainView(){
-    if (mode == 0) 
+    if (mode == 0)
     {
         mode = 1;
         terrainFaces = getPatchFaces(mode)
         BufferFaces(terrainFaces)
     }
-    else if(mode == 1) 
+    else if(mode == 1)
     {
         mode = 2;
         terrainFaces = getPatchFaces(mode)
         BufferFaces(terrainFaces)
     }
-    else if(mode == 2) 
+    else if(mode == 2)
     {
         mode = 0;
         terrainFaces = getPatchFaces(mode)
@@ -275,27 +284,27 @@ function changeTerrainView(){
 }
 
 function changeShading(){
-    if (shading == 0) 
+    if (shading == 0)
     shading = 1;
-    else if(shading == 1) 
-    shading = 2;    
-    else if(shading == 2) 
+    else if(shading == 1)
+    shading = 2;
+    else if(shading == 2)
     shading = 0;
 }
 
 function exit(){
-    /*Passes empty vertex list to buffer. 
+    /*Passes empty vertex list to buffer.
     Initiates exit sequence*/
     over = true
     eye = vec3(0,0,0)
     speed = 0
     terrainView = "None"
     shading = "None"
-    var vertices = []                  
+    var vertices = []
     BufferVertices(vertices);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length); //Rendering the triangle
-    
+
 }
 
 function directionChange(){
@@ -303,20 +312,20 @@ function directionChange(){
             direction = "North"
     else if(rotatingLeftAngle > 0 && rotatingLeftAngle < 90)
         direction = "North East"
-    
+
     else if(rotatingLeftAngle > 90)
         direction = "East"
-    
+
     else if(rotatingLeftAngle < 0 && rotatingLeftAngle > -90)
         direction = "North West"
-    
+
     else if(rotatingLeftAngle < - 90)
         direction = "West"
 }
 
 function movementConstraints(){
-        
-        
+
+
         if(rotatingLeftAngle > 90)
         {
             rotatingLeftAngle = 90
@@ -327,7 +336,7 @@ function movementConstraints(){
             rotatingLeftAngle = -90
             rotatingLeft = 0
         }
-        
+
         if(rotatingUpAngle > 90)
         {
             rotatingUpAngle = 90

@@ -78,7 +78,6 @@ function updateScene()
         cameraPosition = eye;
         gl.uniform3fv(cameraPositionL, flatten([eye]))
 
-
         render()
     }
 
@@ -107,6 +106,9 @@ window.onload = function init() {
 
         gl.uniform3fv(cameraPositionL, flatten([eye]))
 
+        toggleShadingL = gl.getUniformLocation(program, "toggleShading")
+        gl.uniform1fv(toggleShadingL, [toggleShading])
+
         var KaL = gl.getUniformLocation(program, "Ka")
         gl.uniform1fv(KaL, [Ka])
 
@@ -130,10 +132,6 @@ window.onload = function init() {
 
         lightPosL = gl.getUniformLocation(program, "lightPos")
         gl.uniform3fv(lightPosL, flatten(lightPos))
-
-
-
-
 
 
         lastBufferPos = eye.slice(0, 3)
