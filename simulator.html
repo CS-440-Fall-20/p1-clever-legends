@@ -3,37 +3,70 @@
 
 <head>
     <script id="vertex-shader" type="x-shader/x-vertex">
-        attribute vec3 vPosition;
-        attribute vec3 vNormal;
-		    varying vec4 fragColor;
+    attribute vec3 vPosition;
+    attribute vec3 vNormal;
+    varying vec4 fragColor;
 
-        varying vec3 normal;
-        varying vec3 position;
+    varying vec3 normal;
+    varying vec3 position;
 
-        uniform float toggleShading;
-        uniform mat4 modelViewMatrix;
-        uniform mat4 projectionMatrix;
-        uniform vec3 cameraPosition;
+    uniform float toggleShading;
+    uniform mat4 modelViewMatrix;
+    uniform mat4 projectionMatrix;
+    uniform vec3 cameraPosition;
 
-        uniform float Ka;
-        uniform float Kd;
-        uniform float Ks;
-        uniform float shininessVal;
+    uniform float Ka;
+    uniform float Kd;
+    uniform float Ks;
+    uniform float shininessVal;
 
-        uniform vec3 ambientColor;
-        uniform vec3 diffuseColor;
-        uniform vec3 specularColor;
-        uniform vec3 lightPos;
+    uniform vec3 ambientColor;
+    uniform vec3 diffuseColor;
+    uniform vec3 specularColor;
+    uniform vec3 lightPos;
 
-		void main()
-		{
+
+    vec3 mapPoint(float p, float q, vec3 a, vec3 b, float x)
+    {
+      float coefficient = ( x - p ) / ( q - p );
+      return ( 1.0 - coefficient ) * a + coefficient * b;
+    }
+
+    vec3 getVertColor(vec3 position)
+    {
+      if (position.y <= 0.03)
+      {
+        return vec3(0.0, 0.0, 1.0);
+      }
+      else if (position.y <= 2.0)
+      {
+        vec3 brown = vec3(0.17, 0.085, 0.04);
+        vec3 green = vec3(0.1, 1.0, 0.2);
+
+        return mapPoint(0.0, 2.0, green, brown, position.y);
+      }
+      else if (position.y <= 8.0)
+      {
+        vec3 white = vec3(1.0, 1.0, 1.0);
+        vec3 brown = vec3(0.17, 0.085, 0.04);
+
+        return mapPoint(2.0, 3.5, brown, white, position.y);
+      }
+      else
+      {
+        return vec3(1.0, 0.0, 0.0);
+      }
+    }
+
+    void main()
+    {
             float Ka = 1.0;
             float Kd = 1.0;
-            float Ks = 1.0;
+            float Ks = 0.5;
             float shininessVal = 4.0;
 
             vec3 ambientColor = vec3(0.0, 0.0, 0.0);
-            vec3 diffuseColor = vec3(0.0, 1.0, 1.0);
+            vec3 diffuseColor = getVertColor(vPosition);
             vec3 specularColor = vec3(1.0, 1.0, 1.0);
 
             vec4 pos = vec4(vPosition.xyz, 1.0);
@@ -41,7 +74,7 @@
                 pos.y = 0.0;
             }
             pos = modelViewMatrix * pos;
-			vec4 pos2 = pos;
+            vec4 pos2 = pos;
             if(pos2.z >= 0.0)
             {
                 pos2.z = 10000000000.0;
@@ -83,68 +116,100 @@
               normal = vNormal;
             }
 
-		}
-    </script>
+    }
+</script>
 
-    <script id="fragment-shader" type="x-shader/x-fragment">
-        precision highp float;
-        varying vec4 fragColor;
-        uniform float toggleShading;
+<script id="fragment-shader" type="x-shader/x-fragment">
+    precision highp float;
+    varying vec4 fragColor;
+    uniform float toggleShading;
 
-        varying vec3 normal;
-        varying vec3 position;
+    varying vec3 normal;
+    varying vec3 position;
 
-        uniform vec3 cameraPosition;
+    uniform vec3 cameraPosition;
 
-        uniform float Ka;
-        uniform float Kd;
-        uniform float Ks;
-        uniform float shininessVal;
+    uniform float Ka;
+    uniform float Kd;
+    uniform float Ks;
+    uniform float shininessVal;
 
-        uniform vec3 ambientColor;
-        uniform vec3 diffuseColor;
-        uniform vec3 specularColor;
-        uniform vec3 lightPos;
+    uniform vec3 ambientColor;
+    uniform vec3 diffuseColor;
+    uniform vec3 specularColor;
+    uniform vec3 lightPos;
 
-        void main()
+    vec3 mapPoint(float p, float q, vec3 a, vec3 b, float x)
+    {
+      float coefficient = ( x - p ) / ( q - p );
+      return ( 1.0 - coefficient ) * a + coefficient * b;
+    }
+
+    vec3 getVertColor(vec3 position)
+    {
+      if (position.y <= 0.03)
+      {
+        return vec3(0.0, 0.0, 1.0);
+      }
+      else if (position.y <= 2.0)
+      {
+        vec3 brown = vec3(0.17, 0.085, 0.04);
+        vec3 green = vec3(0.1, 1.0, 0.2);
+
+        return mapPoint(0.0, 2.0, green, brown, position.y);
+      }
+      else if (position.y <= 8.0)
+      {
+        vec3 white = vec3(1.0, 1.0, 1.0);
+        vec3 brown = vec3(0.17, 0.085, 0.04);
+
+        return mapPoint(2.0, 3.5, brown, white, position.y);
+      }
+      else
+      {
+        return vec3(1.0, 0.0, 0.0);
+      }
+    }
+
+
+    void main()
+    {
+      float Ka = 1.0;
+      float Kd = 1.0;
+      float Ks = 0.5;
+      float shininessVal = 4.0;
+
+      vec3 ambientColor = vec3(0.0, 0.0, 0.0);
+      vec3 diffuseColor = getVertColor(position);
+      vec3 specularColor = vec3(1.0, 1.0, 1.0);
+
+        if (toggleShading == 1.0)
         {
-            float Ka = 1.0;
-            float Kd = 1.0;
-            float Ks = 1.0;
-            float shininessVal = 4.0;
-
-            vec3 ambientColor = vec3(0.0, 0.0, 0.0);
-            vec3 diffuseColor = vec3(0.0, 1.0, 1.0);
-            vec3 specularColor = vec3(1.0, 1.0, 1.0);
-
-            if (toggleShading == 1.0)
-            {
-              gl_FragColor = fragColor;
-            }
-            else if (toggleShading == 2.0)
-            {
-
-              vec3 N = normalize(normal);
-              vec3 L = normalize(lightPos - position);
-              float lambertian = max(dot(N, L), 0.0);
-              float specular = 0.0;
-              if(lambertian > 0.0) {
-                vec3 R = reflect(-L, N);
-                vec3 V = normalize(cameraPosition - position);
-                float specAngle = max(dot(R, V), 0.0);
-                specular = pow(specAngle, shininessVal);
-              }
-              gl_FragColor = vec4(Ka * ambientColor +
-                           Kd * lambertian * diffuseColor +
-                           Ks * specular * specularColor, 1.0);
-            }
-            else if (toggleShading == 0.0)
-            {
-
-            }
-            //gl_FragColor = fragColor;
+          gl_FragColor = fragColor;
         }
-    </script>
+        else if (toggleShading == 2.0)
+        {
+
+          vec3 N = normalize(normal);
+          vec3 L = normalize(lightPos - position);
+          float lambertian = max(dot(N, L), 0.0);
+          float specular = 0.0;
+          if(lambertian > 0.0) {
+            vec3 R = reflect(-L, N);
+            vec3 V = normalize(cameraPosition - position);
+            float specAngle = max(dot(R, V), 0.0);
+            specular = pow(specAngle, shininessVal);
+          }
+          gl_FragColor = vec4(Ka * ambientColor +
+                       Kd * lambertian * diffuseColor +
+                       Ks * specular * specularColor, 1.0);
+        }
+        else if (toggleShading == 0.0)
+        {
+
+        }
+    }
+</script>
 
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/webgl-utils.js"></script>
     <script type="text/javascript" src="https://www.cs.unm.edu/~angel/BOOK/INTERACTIVE_COMPUTER_GRAPHICS/SEVENTH_EDITION/CODE/Common/initShaders.js"></script>
@@ -229,7 +294,7 @@
         Down = Decrease Speed
     </p>
     </p>
-    
+
     </p>
     </div>
 

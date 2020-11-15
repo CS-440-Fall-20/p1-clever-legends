@@ -1,6 +1,6 @@
 function getHeight(x, z)
 {
-	return noise.perlin2(-x/3, -z/3)*6
+	return noise.perlin2(-x/6, -z/6)*8
 }
 
 
@@ -18,7 +18,9 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
             zTemp = zTemp - zTemp % step
             var y = getHeight(xTemp, zTemp)
             if (y < 0.2)
-            y = 0
+            {
+							y = -3
+						}
             terrainVerts.push(vec3(xTemp, y, zTemp))
         }
         collength += 1
@@ -110,7 +112,7 @@ function setFaceNormals()
         var v3 = terrainVerts[trueVertFaces[i+2]]
         var normal = findNormal(v1, v2, v3)
         faceNormal.push(normalize(normal))
-    }    
+    }
 }
 
 
@@ -125,7 +127,7 @@ function getPatchNormal(){
         terrainNormal[i] = vec3(0, 0, 0)
         integer[i] = 0
     }
-    
+
     for(var i = 0; i < trueVertFaces.length; i++)
     {
         var indexFaceNormal = Math.floor(i/3)
