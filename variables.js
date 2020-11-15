@@ -4,6 +4,8 @@ var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
 var toggleShading = 1.0;
 var toggleShadingL;
+var shading = ["Flat", "Smooth", "Phong"]
+var tshading = "Smooth"
 var projectionMatrix, projectionMatrixLoc
 var eye, at, up, eyeOriginalPos, lastBufferPos
 var left, right, bottom, top1, near, far
@@ -21,8 +23,6 @@ var patchWidth = 60
 var acc = 0.00
 var terrainNormal, faceNormal
 var speed = 0.02
-var shading
-var tshading
 var over = false
 var direction = "North"
 var cameraPositionL;
@@ -38,3 +38,14 @@ var specularColor = vec3(1.0, 1.0, 1.0);
 var lightPos = vec3(0.0, 0.0, 10.0);
 
 var cameraPosition;
+
+var shiftPressed = false
+var projDecrement = 0.05
+var farChange = 5
+var nearChange = 5
+var ogLeft = -1
+var ogRight = 1
+var ogBottom = -1
+var ogTop1 = 1
+var ogNear = 0.00
+var ogFar = 40

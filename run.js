@@ -100,7 +100,6 @@ window.onload = function init() {
     near = ogNear
     far = ogFar
     mode = 2
-    shading = 1
     WebGLSetup()
     if (!over){
 

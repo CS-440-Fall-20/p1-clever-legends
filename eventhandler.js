@@ -1,13 +1,3 @@
-var shiftPressed = false
-var projDecrement = 0.05
-var farChange = 5
-var nearChange = 5
-var ogLeft = -1
-var ogRight = 1
-var ogBottom = -1
-var ogTop1 = 1
-var ogNear = 0.00
-var ogFar = 40
 
 function handleKeyDown(event)
 {
@@ -15,6 +5,7 @@ function handleKeyDown(event)
     if(event.keyCode == 67) //c
     {
       toggleShading = (toggleShading + 1) % 3
+      tshading = shading[toggleShading]
       gl.uniform1fv(toggleShadingL, [toggleShading])
 
 
@@ -283,14 +274,6 @@ function changeTerrainView(){
     }
 }
 
-function changeShading(){
-    if (shading == 0)
-    shading = 1;
-    else if(shading == 1)
-    shading = 2;
-    else if(shading == 2)
-    shading = 0;
-}
 
 function exit(){
     /*Passes empty vertex list to buffer.
@@ -299,7 +282,8 @@ function exit(){
     eye = vec3(0,0,0)
     speed = 0
     terrainView = "None"
-    shading = "None"
+    tshading = "None"
+    direction = "None"
     var vertices = []
     BufferVertices(vertices);
     gl.clearColor(0,0,0,1)
