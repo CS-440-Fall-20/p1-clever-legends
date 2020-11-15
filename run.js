@@ -22,6 +22,21 @@ var shading
 var tshading
 var over = 0
 var direction = "North"
+var cameraPositionL;
+
+var Ka = 1.0;
+var Kd = 1.0;
+var Ks = 1.0;
+var shininessVal = 90;
+
+var ambientColor = vec3(0.0, 0.0, 0.0);
+var diffuseColor = vec3(1.0, 0.8, 1.0);
+var specularColor = vec3(1.0, 1.0, 1.0);
+var lightPos = vec3(0.0, 0.0, 10.0);
+
+var cameraPosition;
+
+
 noise.seed(0)
 
 
@@ -62,7 +77,7 @@ function updateScene()
         rotatingLeftAngle += speedRot * rotatingLeft
         rotatingUpAngle += speedRot * rotatingUp
         rotatingSwirlAngle += speedRot * rotatingSwirl
-        
+
         if(rotatingLeftAngle > 90)
         {
             rotatingLeftAngle = 90
@@ -73,7 +88,7 @@ function updateScene()
             rotatingLeftAngle = -90
             rotatingLeft = 0
         }
-        
+
         if(rotatingUpAngle > 90)
         {
             rotatingUpAngle = 90
@@ -88,7 +103,7 @@ function updateScene()
         var diff = vec4(subtract(at, eye), 0.0)
         var rotMat1 = rotate(rotatingLeft * speedRot, up)
         diff = mult(rotMat1, diff)
-        
+
         var perp = cross(diff.slice(0,3), up)
 
         var rotMat2 = rotate(rotatingUp * speedRot, perp)
@@ -122,19 +137,19 @@ function updateScene()
             direction = "North"
         else if(rotatingLeftAngle > 0 && rotatingLeftAngle < 90)
             direction = "North East"
-        
+
         else if(rotatingLeftAngle > 90)
             direction = "East"
-        
+
         else if(rotatingLeftAngle < 0 && rotatingLeftAngle > -90)
             direction = "North West"
-        
+
         else if(rotatingLeftAngle < - 90)
             direction = "West"
-        
+
         render()
     }
-    
+
 }
 
 
@@ -152,8 +167,43 @@ window.onload = function init() {
     shading = 1
     WebGLSetup()
     if (over == 0){
-    
+
         eyeOriginalPos = eye.slice(0, 3)
+
+        cameraPosition = eye;
+        cameraPositionL = gl.getUniformLocation(program, "cameraPosition")
+
+        gl.uniform3fv(cameraPositionL, flatten([eye]))
+
+        var KaL = gl.getUniformLocation(program, "Ka")
+        gl.uniform1fv(KaL, [Ka])
+
+        var KdL = gl.getUniformLocation(program, "Kd")
+        gl.uniform1fv(KdL, [Kd])
+
+        var KsL = gl.getUniformLocation(program, "Ks")
+        gl.uniform1fv(KsL, [Ks])
+
+        var shininessValL = gl.getUniformLocation(program, "shininessVal")
+        gl.uniform1f(shininessValL, shininessVal)
+
+        ambientColorL = gl.getUniformLocation(program, "ambientColor")
+        gl.uniform3fv(ambientColorL, flatten(cameraPosition))
+
+        diffuseColorL = gl.getUniformLocation(program, "diffuseColor")
+        gl.uniform3fv(diffuseColorL, flatten(diffuseColor))
+
+        specularColorL = gl.getUniformLocation(program, "specularColor")
+        gl.uniform3fv(specularColorL, flatten(specularColor))
+
+        lightPosL = gl.getUniformLocation(program, "lightPos")
+        gl.uniform3fv(lightPosL, flatten(lightPos))
+
+
+
+
+
+
         lastBufferPos = eye.slice(0, 3)
         var eyeOffset = subtract(eye, eyeOriginalPos)
         terrainColors = []
@@ -161,6 +211,7 @@ window.onload = function init() {
         // chooseShading();
         BufferVertices(terrainVerts, terrainColors)
         BufferFaces(terrainFaces)
+        //BufferNormal(terrainNormal)
 
         modelViewMatrixLoc = gl.getUniformLocation(program, "modelViewMatrix")
         projectionMatrixLoc = gl.getUniformLocation(program, "projectionMatrix")
@@ -174,10 +225,13 @@ window.onload = function init() {
         gl.uniformMatrix4fv(projectionMatrixLoc, false, flatten(projectionMatrix))
 
         terrainNormal = getPatchNormal()
+        BufferNormal(terrainNormal)
+        console.log(terrainNormal.length)
+        console.log(terrainVerts.length)
+        console.log(terrainNormal[0].length)
+
 
         render()
     }
 
 }
-
-
