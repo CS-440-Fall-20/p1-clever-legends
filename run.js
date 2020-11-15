@@ -75,6 +75,10 @@ function updateScene()
             lastBufferPos = eye.slice(0, 3)
         }
 
+        cameraPosition = eye;
+        gl.uniform3fv(cameraPositionL, flatten([eye]))
+
+
         render()
     }
 
@@ -95,7 +99,7 @@ window.onload = function init() {
     shading = 1
     WebGLSetup()
     if (!over){
-    
+
         eyeOriginalPos = eye.slice(0, 3)
 
         cameraPosition = eye;
