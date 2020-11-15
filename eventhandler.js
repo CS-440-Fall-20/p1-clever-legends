@@ -13,14 +13,14 @@ function handleKeyDown(event)
 {
     if(event.keyCode == 87) //w
     {
-        if(rotatingUp == 0 && rotatingUpAngle > -50)
+        if(rotatingUp == 0)
         {
             rotatingUp = -1
 
         }
         
     }
-    else if(event.keyCode == 83 && rotatingUpAngle < 70) //s
+    else if(event.keyCode == 83) //s
     {
         if(rotatingUp == 0)
         {
@@ -244,7 +244,7 @@ function handleKeyUp(event)
 
 
 function speedUp() {
-    if(speed < 0.4)
+    if(speed < 2)
     {speed += acc}
 
 }
@@ -273,6 +273,7 @@ function changeTerrainView(){
         BufferFaces(terrainFaces)
     }
 }
+
 function changeShading(){
     if (shading == 0) 
     shading = 1;
@@ -283,8 +284,9 @@ function changeShading(){
 }
 
 function exit(){
-
-    over = 1
+    /*Passes empty vertex list to buffer. 
+    Initiates exit sequence*/
+    over = true
     eye = vec3(0,0,0)
     speed = 0
     terrainView = "None"
@@ -294,4 +296,46 @@ function exit(){
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length); //Rendering the triangle
     
+}
+
+function directionChange(){
+    if(rotatingLeftAngle == 0)
+            direction = "North"
+    else if(rotatingLeftAngle > 0 && rotatingLeftAngle < 90)
+        direction = "North East"
+    
+    else if(rotatingLeftAngle > 90)
+        direction = "East"
+    
+    else if(rotatingLeftAngle < 0 && rotatingLeftAngle > -90)
+        direction = "North West"
+    
+    else if(rotatingLeftAngle < - 90)
+        direction = "West"
+}
+
+function movementConstraints(){
+        
+        
+        if(rotatingLeftAngle > 90)
+        {
+            rotatingLeftAngle = 90
+            rotatingLeft = 0
+        }
+        else if(rotatingLeftAngle < -90)
+        {
+            rotatingLeftAngle = -90
+            rotatingLeft = 0
+        }
+        
+        if(rotatingUpAngle > 90)
+        {
+            rotatingUpAngle = 90
+            rotatingUp = 0
+        }
+        else if(rotatingUpAngle < -90)
+        {
+            rotatingUpAngle = -90
+            rotatingUp = 0
+        }
 }
