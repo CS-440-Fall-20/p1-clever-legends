@@ -5,7 +5,6 @@ function render()
     if(mode == 0)
     {
         gl.drawElements(gl.POINTS, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        gl.clearColor(0,0,0,1)
         terrainView = "Dots"
         
         
@@ -13,7 +12,6 @@ function render()
     else if (mode == 1)
     {
         gl.drawElements(gl.LINE_STRIP, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        gl.clearColor(0,0,0,1)
         terrainView = "Wireframe"
        
 
@@ -22,7 +20,6 @@ function render()
     {
         
         gl.drawElements(gl.TRIANGLES, terrainFaces.length, gl.UNSIGNED_SHORT, 0)
-        gl.clearColor(173/255, 216/255, 230/255,1)
         terrainView = "Filled"
         
     }

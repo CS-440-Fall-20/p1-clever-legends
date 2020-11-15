@@ -302,6 +302,7 @@ function exit(){
     shading = "None"
     var vertices = []
     BufferVertices(vertices);
+    gl.clearColor(0,0,0,1)
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, vertices.length); //Rendering the triangle
 

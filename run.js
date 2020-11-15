@@ -7,7 +7,7 @@ function WebGLSetup(){
     if (!gl) { alert("WebGL isn't available") }
     //  Configure WebGL
     gl.viewport(0, 0, canvas.width, canvas.height)
-    gl.clearColor(0, 0,0,1)
+    gl.clearColor(173/255, 216/255, 230/255,1)
     gl.enable(gl.DEPTH_TEST);
     //  Load shaders and initialize attribute buffers
     gl.clear(gl.COLOR_BUFFER_BIT)
