@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 var canvas, gl
 var modelViewMatrix, modelViewMatrixLoc
 var terrainVerts, terrainFaces, mode, rowLength, terrainView, terrainColors
@@ -38,5 +37,3 @@ var lightPos = vec3(0.0, 0.0, 10.0);
 
 var cameraPosition;
 
-
-noise.seed(0)
