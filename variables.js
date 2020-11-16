@@ -50,4 +50,4 @@ var ogRight = 1
 var ogBottom = -1
 var ogTop1 = 1
 var ogNear = 0.00
-var ogFar = 60
+var ogFar = 40
