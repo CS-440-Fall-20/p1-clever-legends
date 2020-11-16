@@ -17,7 +17,7 @@ function getPatchVert(xmin, xmax, zmin, zmax, eyeOffset){
             xTemp = xTemp - xTemp % step
             zTemp = zTemp - zTemp % step
             var y = getHeight(xTemp, zTemp)
-            if (y < 0.2)
+            if (y <= 0.0)
             {
                 y = -3
             }
